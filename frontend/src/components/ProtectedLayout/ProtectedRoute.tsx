@@ -28,6 +28,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (loading || checkingSetup) return <div className="p-4">Loading...</div>;
   if (!user) return <Navigate to="/login" />;
   if (!hasNurseRecord && !isOnSetupPage) return <Navigate to="/setup" />;
+  if (hasNurseRecord && isOnSetupPage) return <Navigate to="/" />;
 
   return children;
 }
