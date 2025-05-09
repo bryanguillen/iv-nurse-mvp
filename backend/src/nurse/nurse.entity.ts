@@ -8,12 +8,12 @@ export class NurseEntity {
   @Column({ unique: true })
   email: string;
 
-  @Column()
-  first_name: string;
+  @Column({ name: 'first_name' })
+  firstName: string;
 
-  @Column()
-  last_name: string;
+  @Column({ name: 'last_name' })
+  lastName: string;
 
-  @Column()
-  org_name: string;
+  @Column({ name: 'org_name' })
+  orgName: string;
 }

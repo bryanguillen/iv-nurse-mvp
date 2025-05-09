@@ -9,11 +9,11 @@ export class Nurse {
   email: string;
 
   @Field({ nullable: true })
-  first_name?: string;
+  firstName?: string;
 
   @Field({ nullable: true })
-  last_name?: string;
+  lastName?: string;
 
   @Field({ nullable: true })
-  org_name?: string;
+  orgName?: string;
 }
