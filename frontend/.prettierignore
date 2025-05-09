@@ -1,0 +1,15 @@
+# Build output
+dist
+build
+
+# Dependencies
+node_modules
+
+# Cache
+.cache
+.eslintcache
+
+# Misc
+.DS_Store
+*.pem
+coverage 
