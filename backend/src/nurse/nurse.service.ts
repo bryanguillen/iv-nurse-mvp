@@ -11,7 +11,6 @@ export class NurseService {
   ) {}
 
   async findAll(): Promise<NurseEntity[]> {
-    console.log('nurseRepository', await this.nurseRepository.find());
     return this.nurseRepository.find();
   }
 }

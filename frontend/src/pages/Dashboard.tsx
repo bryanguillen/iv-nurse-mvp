@@ -7,7 +7,6 @@ export default function Dashboard() {
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
       if (data.session) {
-        console.log(data.session.access_token);
         setEmail(data.session.user.email || null);
       }
     });
