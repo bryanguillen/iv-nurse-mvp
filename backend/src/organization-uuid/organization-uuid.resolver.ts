@@ -1,7 +1,7 @@
 import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { OrganizationUuidService } from './organization-uuid.service';
 import { CreateOrganizationUuidInput } from './dto/create-organization-uuid.input';
-import { OrganizationUuid } from './organization-uuid.type';
+import { OrganizationUuid } from './dto/organization-uuid.type';
 
 @Resolver(() => OrganizationUuid)
 export class OrganizationUuidResolver {
