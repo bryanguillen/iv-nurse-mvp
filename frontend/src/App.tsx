@@ -1,7 +1,7 @@
-import { Routes, Route } from 'react-router-dom'
-import Login from './pages/Login'
-import Dashboard from './pages/Dashboard'
-import { ProtectedLayout } from './components/ProtectedLayout'
+import { Routes, Route } from 'react-router-dom';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import { ProtectedLayout } from './components/ProtectedLayout';
 
 export default function App() {
   return (
@@ -11,5 +11,5 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
       </Route>
     </Routes>
-  )
+  );
 }

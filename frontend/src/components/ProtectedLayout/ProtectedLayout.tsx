@@ -7,4 +7,4 @@ export function ProtectedLayout() {
       <Outlet />
     </ProtectedRoute>
   );
-} 
+}

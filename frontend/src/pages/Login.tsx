@@ -1,9 +1,9 @@
-import { useState } from 'react'
-import { supabase } from '../config/supabase'
+import { useState } from 'react';
+import { supabase } from '../config/supabase';
 
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [sent, setSent] = useState(false)
+  const [email, setEmail] = useState('');
+  const [sent, setSent] = useState(false);
 
   const sendMagicLink = async () => {
     const { error } = await supabase.auth.signInWithOtp({
@@ -11,10 +11,10 @@ export default function Login() {
       options: {
         emailRedirectTo: `${location.origin}/dashboard`,
       },
-    })
-    if (error) alert(error.message)
-    else setSent(true)
-  }
+    });
+    if (error) alert(error.message);
+    else setSent(true);
+  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4">
@@ -24,13 +24,10 @@ export default function Login() {
           <input
             className="border p-2 rounded w-full max-w-xs mb-4"
             placeholder="Enter your email"
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
             value={email}
           />
-          <button
-            className="bg-blue-600 text-white px-4 py-2 rounded"
-            onClick={sendMagicLink}
-          >
+          <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={sendMagicLink}>
             Send Magic Link
           </button>
         </>
@@ -38,5 +35,5 @@ export default function Login() {
         <p>✅ Magic link sent! Check your email.</p>
       )}
     </div>
-  )
+  );
 }
