@@ -1,7 +1,10 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Query } from '@nestjs/graphql';
+import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { Nurse } from './nurse.type';
 
 @Resolver(() => Nurse)
+@UseGuards(SupabaseAuthGuard)
 export class NurseResolver {
   @Query(() => Nurse)
   getCurrentNurse(): Nurse {
