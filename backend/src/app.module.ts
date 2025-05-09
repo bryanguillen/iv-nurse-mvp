@@ -4,6 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NurseModule } from './nurse/nurse.module';
+import { OrganizationUuidModule } from './organization-uuid/organization-uuid.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -26,6 +27,7 @@ import databaseConfig from './config/database.config';
       context: ({ req }) => ({ req }), // Attach request to context for auth
     }),
     NurseModule,
+    OrganizationUuidModule,
   ],
 })
 export class AppModule {}
