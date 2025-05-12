@@ -25,4 +25,4 @@ export class NurseUuidResolver {
   async getNurseUuids(): Promise<NurseUuid | null> {
     return null;
   }
-} 
+}
