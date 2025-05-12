@@ -12,6 +12,17 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
 
   const isOnSetupPage = location.pathname === '/setup';
 
+  /**
+   * Check if the nurse has a record in the database
+   * with a HACK for the case when the user initially signs up.
+   * 
+   * HACK - Notice the check for location and hasNurseRecord,
+   * this is useful for the case where the user is in setup
+   * and successfully creates their account, but the page
+   * refreshes and the user is no longer in setup. Without this,
+   * they go back to setup since this component is not aware of
+   * the state update.
+   */
   useEffect(() => {
     if (!user || hasNurseRecord) return;
 
