@@ -3,7 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { NurseUuidEntity } from '../nurse-uuid/nurse-uuid.entity';
 
 @Entity('nurse_availability')
 export class NurseAvailabilityEntity {
@@ -12,6 +15,10 @@ export class NurseAvailabilityEntity {
 
   @Column({ name: 'nurse_id' })
   nurseId: string;
+
+  @ManyToOne(() => NurseUuidEntity, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'nurse_id' })
+  nurse: NurseUuidEntity;
 
   @Column({ name: 'day_of_week' })
   dayOfWeek: string;
