@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { NurseAvailabilityEntity } from '../nurse-availability/nurse-availability.entity';
 
 @Entity('nurse_uuids')
 export class NurseUuidEntity {
@@ -7,6 +8,12 @@ export class NurseUuidEntity {
 
   @Column({ unique: true, name: 'supabase_id' })
   supabaseId: string;
+
+  @OneToMany(
+    () => NurseAvailabilityEntity,
+    (availability) => availability.nurse,
+  )
+  availability: NurseAvailabilityEntity[];
 
   @Column({
     type: 'timestamp',
