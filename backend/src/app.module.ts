@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NurseModule } from './nurse/nurse.module';
 import { OrganizationUuidModule } from './organization-uuid/organization-uuid.module';
+import { NurseUuidModule } from './nurse-uuid/nurse-uuid.module';
 import databaseConfig from './config/database.config';
 
 @Module({
@@ -28,6 +29,7 @@ import databaseConfig from './config/database.config';
     }),
     NurseModule,
     OrganizationUuidModule,
+    NurseUuidModule,
   ],
 })
 export class AppModule {}
