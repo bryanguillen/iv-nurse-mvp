@@ -41,7 +41,7 @@ export default function Setup() {
   return (
     <div className="max-w-md mx-auto mt-20 p-6 border rounded shadow">
       <h1 className="text-xl font-bold mb-4">Finish Setting Up Your Account</h1>
-      {['first_name', 'last_name', 'org_name'].map((field) => (
+      {['first_name', 'last_name', 'org_name'].map(field => (
         <input
           key={field}
           name={field}
