@@ -24,6 +24,7 @@ import databaseConfig from './config/database.config';
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: true,
+      introspection: true,
       context: ({ req }) => ({ req }), // Attach request to context for auth
     }),
     NurseUuidModule,

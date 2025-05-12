@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { NurseUuid } from './dto/nurse-uuid.type';
 import { NurseUuidService } from './nurse-uuid.service';
@@ -15,5 +15,14 @@ export class NurseUuidResolver {
     @Args('input') input: CreateNurseUuidInput,
   ): Promise<NurseUuid> {
     return this.nurseUuidService.createNurseUuid(input.supabaseId);
+  }
+
+  /**
+   * TEMP HACK: Remove once other queries are implemented, as
+   * this stops the query root hack.
+   */
+  @Query(() => NurseUuid, { nullable: true })
+  async getNurseUuids(): Promise<NurseUuid | null> {
+    return null;
   }
 } 
