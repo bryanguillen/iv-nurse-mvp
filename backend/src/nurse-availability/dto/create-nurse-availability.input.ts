@@ -1,9 +1,10 @@
 import { InputType, Field } from '@nestjs/graphql';
+import { DayOfWeek } from '../enums/day-of-week.enum';
 
 @InputType()
 export class NurseAvailabilitySlotInput {
-  @Field()
-  dayOfWeek: string;
+  @Field(() => DayOfWeek)
+  dayOfWeek: DayOfWeek;
 
   @Field()
   startTime: string;
