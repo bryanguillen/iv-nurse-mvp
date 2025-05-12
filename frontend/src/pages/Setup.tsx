@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../config/supabase';
+import { useSaveSupabaseIdsMutation } from '../gql/mutations/SaveNurseOrgIds.generated';
 
 export default function Setup() {
   const { user } = useAuth();
   const [form, setForm] = useState({ first_name: '', last_name: '', org_name: '', timezone: '' });
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const [saveSupabaseIds] = useSaveSupabaseIdsMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,25 +18,49 @@ export default function Setup() {
 
   const handleSubmit = async () => {
     setError('');
+    let orgId: string | undefined;
+
     if (!form.first_name || !form.last_name || !form.org_name) {
       setError('All fields required');
       return;
     }
 
-    const client = supabase;
+    try {
+      // Atomic-like flow
+      const result = await supabase.rpc('create_nurse_and_org', {
+        nurse_id: user.id,
+        first_name: form.first_name,
+        last_name: form.last_name,
+        org_name: form.org_name,
+      });
 
-    // Atomic-like flow
-    const result = await client.rpc('create_nurse_and_org', {
-      nurse_id: user.id,
-      first_name: form.first_name,
-      last_name: form.last_name,
-      org_name: form.org_name,
-    });
+      if (result.error) {
+        throw new Error(result.error.message);
+      }
 
-    if (result.error) {
-      setError('❌ Something went wrong: ' + result.error.message);
-    } else {
+      orgId = result.data?.org_id;
+
+      const { errors } = await saveSupabaseIds({
+        variables: {
+          nurseId: user.id,
+          orgId: orgId ?? '',
+        },
+      });
+
+      if (errors) {
+        throw new Error(errors[0].message);
+      }
+
       navigate('/');
+    } catch (error) {
+      console.error('Setup failed:', error);
+      // Rollback Supabase insert
+      await supabase.from('nurses').delete().eq('id', user.id);
+      if (orgId) {
+        await supabase.from('organizations').delete().eq('id', orgId);
+      }
+
+      setError('❌ Oops! Something went wrong: ' + error);
     }
   };
 
