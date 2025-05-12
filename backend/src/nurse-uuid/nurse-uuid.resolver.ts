@@ -3,7 +3,7 @@ import { Resolver, Mutation, Args } from '@nestjs/graphql';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { NurseUuid } from './dto/nurse-uuid.type';
 import { NurseUuidService } from './nurse-uuid.service';
-import { CreateNurseUuidInput } from './nurse-uuid.input';
+import { CreateNurseUuidInput } from './dto/nurse-uuid.input';
 
 @Resolver(() => NurseUuid)
 @UseGuards(SupabaseAuthGuard)
@@ -16,4 +16,4 @@ export class NurseUuidResolver {
   ): Promise<NurseUuid> {
     return this.nurseUuidService.createNurseUuid(input.supabaseId);
   }
-}
+} 
