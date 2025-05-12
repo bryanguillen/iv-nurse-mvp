@@ -1,0 +1,10 @@
+mutation SaveSupabaseIds($nurseId: String!, $orgId: String!) {
+  createNurseUuid(input: { supabaseId: $nurseId }) {
+    id
+    supabaseId
+  }
+  createOrganizationRecord(input: { supabaseOrgId: $orgId }) {
+    id
+    supabaseOrgId
+  }
+}
