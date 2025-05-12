@@ -7,17 +7,21 @@ export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
-export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
-export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = {
+  [_ in K]?: never;
+};
+export type Incremental<T> =
+  | T
+  | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string; }
-  String: { input: string; output: string; }
-  Boolean: { input: boolean; output: boolean; }
-  Int: { input: number; output: number; }
-  Float: { input: number; output: number; }
-  DateTime: { input: any; output: any; }
+  ID: { input: string; output: string };
+  String: { input: string; output: string };
+  Boolean: { input: boolean; output: boolean };
+  Int: { input: number; output: number };
+  Float: { input: number; output: number };
+  DateTime: { input: any; output: any };
 };
 
 export type CreateNurseUuidInput = {
@@ -34,11 +38,9 @@ export type Mutation = {
   createOrganizationRecord: OrganizationUuid;
 };
 
-
 export type MutationCreateNurseUuidArgs = {
   input: CreateNurseUuidInput;
 };
-
 
 export type MutationCreateOrganizationRecordArgs = {
   input: CreateOrganizationUuidInput;
@@ -68,23 +70,28 @@ export type SaveSupabaseIdsMutationVariables = Types.Exact<{
   orgId: Types.Scalars['String']['input'];
 }>;
 
-
-export type SaveSupabaseIdsMutation = { __typename?: 'Mutation', createNurseUuid: { __typename?: 'NurseUuid', id: string, supabaseId: string }, createOrganizationRecord: { __typename?: 'OrganizationUuid', id: string, supabaseOrgId: string } };
-
+export type SaveSupabaseIdsMutation = {
+  __typename?: 'Mutation';
+  createNurseUuid: { __typename?: 'NurseUuid'; id: string; supabaseId: string };
+  createOrganizationRecord: { __typename?: 'OrganizationUuid'; id: string; supabaseOrgId: string };
+};
 
 export const SaveSupabaseIdsDocument = gql`
-    mutation SaveSupabaseIds($nurseId: String!, $orgId: String!) {
-  createNurseUuid(input: {supabaseId: $nurseId}) {
-    id
-    supabaseId
+  mutation SaveSupabaseIds($nurseId: String!, $orgId: String!) {
+    createNurseUuid(input: { supabaseId: $nurseId }) {
+      id
+      supabaseId
+    }
+    createOrganizationRecord(input: { supabaseOrgId: $orgId }) {
+      id
+      supabaseOrgId
+    }
   }
-  createOrganizationRecord(input: {supabaseOrgId: $orgId}) {
-    id
-    supabaseOrgId
-  }
-}
-    `;
-export type SaveSupabaseIdsMutationFn = Apollo.MutationFunction<SaveSupabaseIdsMutation, SaveSupabaseIdsMutationVariables>;
+`;
+export type SaveSupabaseIdsMutationFn = Apollo.MutationFunction<
+  SaveSupabaseIdsMutation,
+  SaveSupabaseIdsMutationVariables
+>;
 
 /**
  * __useSaveSupabaseIdsMutation__
@@ -104,10 +111,21 @@ export type SaveSupabaseIdsMutationFn = Apollo.MutationFunction<SaveSupabaseIdsM
  *   },
  * });
  */
-export function useSaveSupabaseIdsMutation(baseOptions?: Apollo.MutationHookOptions<SaveSupabaseIdsMutation, SaveSupabaseIdsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<SaveSupabaseIdsMutation, SaveSupabaseIdsMutationVariables>(SaveSupabaseIdsDocument, options);
-      }
+export function useSaveSupabaseIdsMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    SaveSupabaseIdsMutation,
+    SaveSupabaseIdsMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<SaveSupabaseIdsMutation, SaveSupabaseIdsMutationVariables>(
+    SaveSupabaseIdsDocument,
+    options
+  );
+}
 export type SaveSupabaseIdsMutationHookResult = ReturnType<typeof useSaveSupabaseIdsMutation>;
 export type SaveSupabaseIdsMutationResult = Apollo.MutationResult<SaveSupabaseIdsMutation>;
-export type SaveSupabaseIdsMutationOptions = Apollo.BaseMutationOptions<SaveSupabaseIdsMutation, SaveSupabaseIdsMutationVariables>;
+export type SaveSupabaseIdsMutationOptions = Apollo.BaseMutationOptions<
+  SaveSupabaseIdsMutation,
+  SaveSupabaseIdsMutationVariables
+>;
