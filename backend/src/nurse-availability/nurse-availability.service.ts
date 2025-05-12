@@ -15,7 +15,18 @@ export class NurseAvailabilityService {
     input: CreateNurseAvailabilityInput,
   ): Promise<NurseAvailabilityEntity[]> {
     const { nurseId, slots } = input;
-    const records = slots.map((slot) => this.repo.create({ nurseId, ...slot }));
+
+    // Create an array of records from the slots
+    const records = slots.map((slot) =>
+      this.repo.create({
+        nurseId,
+        dayOfWeek: slot.dayOfWeek,
+        startTime: slot.startTime,
+        endTime: slot.endTime,
+      }),
+    );
+
+    // Save and return the array of records
     return this.repo.save(records);
   }
 }
