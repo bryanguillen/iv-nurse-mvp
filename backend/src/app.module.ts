@@ -3,7 +3,6 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NurseModule } from './nurse/nurse.module';
 import { OrganizationUuidModule } from './organization-uuid/organization-uuid.module';
 import { NurseUuidModule } from './nurse-uuid/nurse-uuid.module';
 import databaseConfig from './config/database.config';
@@ -27,9 +26,8 @@ import databaseConfig from './config/database.config';
       autoSchemaFile: true,
       context: ({ req }) => ({ req }), // Attach request to context for auth
     }),
-    NurseModule,
-    OrganizationUuidModule,
     NurseUuidModule,
+    OrganizationUuidModule,
   ],
 })
 export class AppModule {}
