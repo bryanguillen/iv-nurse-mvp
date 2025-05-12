@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { NurseUuidEntity } from '../nurse-uuid/nurse-uuid.entity';
+import { DayOfWeek } from './enums/day-of-week.enum';
 
 @Entity('nurse_availability')
 export class NurseAvailabilityEntity {
@@ -20,8 +21,12 @@ export class NurseAvailabilityEntity {
   @JoinColumn({ name: 'nurse_id' })
   nurse: NurseUuidEntity;
 
-  @Column({ name: 'day_of_week' })
-  dayOfWeek: string;
+  @Column({
+    name: 'day_of_week',
+    type: 'enum',
+    enum: DayOfWeek,
+  })
+  dayOfWeek: DayOfWeek;
 
   @Column({ name: 'start_time', type: 'time' })
   startTime: string;
