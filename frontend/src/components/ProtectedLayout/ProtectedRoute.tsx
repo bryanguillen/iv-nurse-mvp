@@ -13,7 +13,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isOnSetupPage = location.pathname === '/setup';
 
   useEffect(() => {
-    if (!user) return;
+    if (!user || hasNurseRecord) return;
 
     const checkNurse = async () => {
       const { data } = await supabase.from('nurses').select('id').eq('id', user.id).single();
@@ -23,7 +23,7 @@ export function ProtectedRoute({ children }: { children: React.ReactNode }) {
     };
 
     checkNurse();
-  }, [user]);
+  }, [user, location.pathname, hasNurseRecord]);
 
   if (loading || checkingSetup) return <div className="p-4">Loading...</div>;
   if (!user) return <Navigate to="/login" />;
