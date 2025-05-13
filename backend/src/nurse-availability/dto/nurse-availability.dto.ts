@@ -1,5 +1,4 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { DayOfWeek } from '../enums/day-of-week.enum';
 
 @ObjectType()
 export class NurseAvailabilityDto {
@@ -9,8 +8,8 @@ export class NurseAvailabilityDto {
   @Field()
   nurseId: string;
 
-  @Field(() => DayOfWeek)
-  dayOfWeek: DayOfWeek;
+  @Field()
+  dayOfWeek: number;
 
   @Field()
   startTime: string;
