@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { OrganizationUuidModule } from './organization-uuid/organization-uuid.module';
 import { NurseUuidModule } from './nurse-uuid/nurse-uuid.module';
 import { NurseAvailabilityModule } from './nurse-availability/nurse-availability.module';
 import databaseConfig from './config/database.config';
+import { SupabaseAuthGuard } from './auth/supabase-auth.guard';
 
 @Module({
   imports: [
@@ -31,6 +33,12 @@ import databaseConfig from './config/database.config';
     NurseUuidModule,
     OrganizationUuidModule,
     NurseAvailabilityModule,
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: SupabaseAuthGuard,
+    },
   ],
 })
 export class AppModule {}
