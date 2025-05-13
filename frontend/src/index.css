@@ -61,30 +61,30 @@
   --sidebar-ring: oklch(0.708 0 0);
 
   /* Custom colors */
-  --background: 210 20% 98%;        /* #F9FAFB */
-  --foreground: 222 47% 11%;        /* #1E293B (slate-800) */
+  --background: #F9FAFB;
+  --foreground: #1E293B;
 
-  --primary: 198 93% 60%;           /* #38BDF8 (sky-400) */
-  --primary-foreground: 0 0% 100%;  /* #FFFFFF */
+  --primary: #38BDF8;
+  --primary-foreground: #FFFFFF;
 
-  --secondary: 158 64% 52%;         /* #10B981 (emerald-500) */
-  --secondary-foreground: 0 0% 100%;
+  --secondary: #10B981;
+  --secondary-foreground: #FFFFFF;
 
-  --muted: 215 20% 65%;             /* #64748B (gray-500) */
-  --muted-foreground: 0 0% 100%;
+  --muted: #64748B;
+  --muted-foreground: #FFFFFF;
 
-  --accent: 158 64% 52%;            /* #10B981 */
-  --accent-foreground: 0 0% 100%;
+  --accent: #10B981;
+  --accent-foreground: #FFFFFF;
 
-  --destructive: 0 84% 60%;
-  --destructive-foreground: 0 0% 100%;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
 
-  --border: 215 20% 65%;
-  --input: 215 20% 65%;
-  --ring: 198 93% 60%;
+  --border: #64748B;
+  --input: #64748B;
+  --ring: #38BDF8;
 
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
+  --card: #FFFFFF;
+  --card-foreground: #1E293B;
 }
 
 /* Dark stayed with the neutral default ones; update if needed */
