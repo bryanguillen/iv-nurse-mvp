@@ -24,4 +24,12 @@ export class NurseServiceResolver {
     const deleted = await this.service.deleteByIds(input.serviceIds);
     return deleted > 0;
   }
+
+  @Query(() => [NurseServiceDto])
+  async getNurseServicesByNurseId(
+    @Args('nurseId') nurseId: string,
+  ): Promise<NurseServiceDto[]> {
+    const entities = await this.service.getByNurseId(nurseId);
+    return entities.map((entity) => plainToInstance(NurseServiceDto, entity));
+  }
 }

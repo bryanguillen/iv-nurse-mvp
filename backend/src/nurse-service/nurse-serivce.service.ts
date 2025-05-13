@@ -25,4 +25,11 @@ export class NurseServiceService {
     const result = await this.repo.delete(ids);
     return result.affected ?? 0;
   }
+
+  async getByNurseId(nurseId: string): Promise<NurseServiceEntity[]> {
+    return this.repo.find({
+      where: { nurseId },
+      order: { name: 'ASC' },
+    });
+  }
 }
