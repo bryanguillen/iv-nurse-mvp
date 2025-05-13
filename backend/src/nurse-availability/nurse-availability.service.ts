@@ -29,4 +29,9 @@ export class NurseAvailabilityService {
     // Save and return the array of records
     return this.repo.save(records);
   }
+
+  async deleteAvailabilityByIds(ids: string[]): Promise<number> {
+    const result = await this.repo.delete(ids);
+    return result.affected ?? 0;
+  }
 }
