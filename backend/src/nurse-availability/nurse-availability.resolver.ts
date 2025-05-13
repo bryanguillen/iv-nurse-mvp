@@ -1,8 +1,9 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { NurseAvailabilityService } from './nurse-availability.service';
 import { CreateNurseAvailabilityInput } from './dto/create-nurse-availability.input';
 import { NurseAvailabilityDto } from './dto/nurse-availability.dto';
 import { DeleteNurseAvailabilityInput } from './dto/delete-nurse-availability.input';
+
 @Resolver(() => NurseAvailabilityDto)
 export class NurseAvailabilityResolver {
   constructor(private service: NurseAvailabilityService) {}
@@ -22,5 +23,13 @@ export class NurseAvailabilityResolver {
       input.availabilityIds,
     );
     return deleted > 0;
+  }
+
+  @Query(() => [NurseAvailabilityDto])
+  async getAvailabilityByNurseId(
+    @Args('nurseId') nurseId: string,
+  ): Promise<NurseAvailabilityDto[]> {
+    const entities = await this.service.getByNurseId(nurseId);
+    return entities;
   }
 }

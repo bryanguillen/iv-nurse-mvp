@@ -34,4 +34,11 @@ export class NurseAvailabilityService {
     const result = await this.repo.delete(ids);
     return result.affected ?? 0;
   }
+
+  async getByNurseId(nurseId: string): Promise<NurseAvailabilityEntity[]> {
+    return this.repo.find({
+      where: { nurseId },
+      order: { dayOfWeek: 'ASC', startTime: 'ASC' },
+    });
+  }
 }
