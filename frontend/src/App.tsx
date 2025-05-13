@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { ProtectedLayout } from './components/ProtectedLayout';
+import { ProtectedLayout } from './components';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
