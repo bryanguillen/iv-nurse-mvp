@@ -20,4 +20,9 @@ export class NurseServiceService {
     );
     return this.repo.save(records);
   }
+
+  async deleteByIds(ids: string[]): Promise<number> {
+    const result = await this.repo.delete(ids);
+    return result.affected ?? 0;
+  }
 }
