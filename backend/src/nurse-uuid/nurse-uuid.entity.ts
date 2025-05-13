@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { NurseAvailabilityEntity } from '../nurse-availability/nurse-availability.entity';
-
+import { NurseServiceEntity } from '../nurse-service/nurse-service.entity';
 @Entity('nurse_uuids')
 export class NurseUuidEntity {
   @PrimaryGeneratedColumn('uuid')
@@ -14,6 +14,9 @@ export class NurseUuidEntity {
     (availability) => availability.nurse,
   )
   availability: NurseAvailabilityEntity[];
+
+  @OneToMany(() => NurseServiceEntity, (service) => service.nurse)
+  services: NurseServiceEntity[];
 
   @Column({
     type: 'timestamp',
