@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   // Get the nurse's internal ID from GraphQL
-  const { data: nurseData } = useGetSelfAsNurseQuery({
+  const { data: nurseData, loading: nurseDataLoading } = useGetSelfAsNurseQuery({
     skip: !user?.id, // Skip the query if we don't have a user ID
   });
 
@@ -49,7 +49,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [nurseData?.getSelfAsNurse?.id]); // Re-run when nurse ID changes
 
-  return <AuthContext.Provider value={{ user, loading }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading: nurseDataLoading || loading }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => useContext(AuthContext);
