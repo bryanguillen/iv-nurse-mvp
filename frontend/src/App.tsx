@@ -4,7 +4,7 @@ import { ProtectedLayout } from './components';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
-
+import Settings from './pages/Settings';
 export default function App() {
   return (
     <Routes>
@@ -12,6 +12,7 @@ export default function App() {
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/setup" element={<Setup />} />
+        <Route path="/settings" element={<Settings />} />
       </Route>
     </Routes>
   );
