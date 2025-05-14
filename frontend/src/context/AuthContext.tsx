@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => {
       listener?.subscription.unsubscribe();
     };
-  }, [nurseData?.getSelfAsNurse?.id]); // Re-run when nurse ID changes
+  }, [user?.id, nurseData?.getSelfAsNurse?.id]);
 
   if (loading || nurseDataLoading) {
     return (
