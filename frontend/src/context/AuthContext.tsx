@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { supabase } from '@/config/supabase';
 import { useGetSelfAsNurseQuery } from '@/gql/queries/GetSelfAsNurse.generated';
+import { Spinner } from '@/components';
 
 type AuthContextType = {
   user: any;
@@ -49,11 +50,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     };
   }, [nurseData?.getSelfAsNurse?.id]); // Re-run when nurse ID changes
 
-  return (
-    <AuthContext.Provider value={{ user, loading: nurseDataLoading || loading }}>
-      {children}
-    </AuthContext.Provider>
-  );
+  if (loading || nurseDataLoading) {
+    return (
+      <div className="flex h-screen w-screen items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  return <AuthContext.Provider value={{ user, loading: false }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => useContext(AuthContext);
