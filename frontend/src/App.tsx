@@ -4,7 +4,8 @@ import { ProtectedLayout } from './components';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
-import Settings from './pages/Settings';
+import { Settings } from './pages/settings';
+
 export default function App() {
   return (
     <Routes>
