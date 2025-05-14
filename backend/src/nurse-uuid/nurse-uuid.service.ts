@@ -17,7 +17,9 @@ export class NurseUuidService {
     return this.nurseUuidRepository.save(nurseUuid);
   }
 
-  async getNurseBySupabaseId(supabaseId: string): Promise<NurseUuidEntity | null> {
+  async getNurseBySupabaseId(
+    supabaseId: string,
+  ): Promise<NurseUuidEntity | null> {
     return this.nurseUuidRepository.findOne({
       where: { supabaseId },
     });
