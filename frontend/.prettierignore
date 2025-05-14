@@ -13,3 +13,7 @@ node_modules
 .DS_Store
 *.pem
 coverage 
+
+# Generated files
+src/**/*.generated.ts
+
