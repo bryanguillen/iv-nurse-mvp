@@ -57,14 +57,17 @@ export function BasicInfo() {
         <CardTitle>Basic Information</CardTitle>
       </CardHeader>
       <CardContent>
-        {loading ? (
+        {loading && (
           <div className="space-y-4">
+            <BasicInfoSkeleton />
             <BasicInfoSkeleton />
             <BasicInfoSkeleton />
             <BasicInfoSkeleton />
           </div>
-        ) : (
+        )}
+        {!loading && (
           <div className="space-y-4">
+            <BasicInfoValue label="Email" value={user?.email} />
             <BasicInfoValue label="First Name" value={nurseData?.first_name} />
             <BasicInfoValue label="Last Name" value={nurseData?.last_name} />
             <BasicInfoValue label="Business Name" value={nurseData?.organization} />
@@ -87,8 +90,8 @@ function BasicInfoSkeleton() {
 function BasicInfoValue({ label, value }: { label: string; value: string }) {
   return (
     <div className="space-y-2">
-      <label className="text-sm text-muted">{label}</label>
-      <p className="font-medium">{value}</p>
+      <label className="text-xs text-muted">{label}</label>
+      <p className="text-sm">{value || 'N/A'}</p>
     </div>
   );
 }
