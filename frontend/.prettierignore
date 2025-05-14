@@ -16,4 +16,5 @@ coverage
 
 # Generated files
 src/**/*.generated.ts
+src/gql/graphql.ts
 
