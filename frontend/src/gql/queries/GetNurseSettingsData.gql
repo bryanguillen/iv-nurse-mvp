@@ -1,0 +1,14 @@
+query GetNurseData($nurseId: String!) {
+  getAvailabilityByNurseId(nurseId: $nurseId) {
+    id
+    dayOfWeek
+    startTime
+    endTime
+  }
+  getNurseServicesByNurseId(nurseId: $nurseId) {
+    id
+    name
+    durationMinutes
+    price
+  }
+}
