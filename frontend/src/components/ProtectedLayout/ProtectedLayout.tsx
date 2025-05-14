@@ -9,7 +9,7 @@ export function ProtectedLayout() {
     <ProtectedRoute>
       <SidebarProvider>
         <AppSidebar />
-        <main>
+        <main className="flex-1 p-4">
           <SidebarTrigger />
           <Outlet />
         </main>
