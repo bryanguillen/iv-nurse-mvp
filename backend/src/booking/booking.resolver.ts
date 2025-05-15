@@ -1,13 +1,23 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { plainToInstance } from 'class-transformer';
 import { BookingService } from './booking.service';
 import { BookingDto } from './dto/booking.dto';
 import { CreateBookingInput } from './dto/create-booking.input';
 import { UpdateBookingInput } from './dto/update-booking.input';
 import { CancelBookingInput } from './dto/cancel-booking.input';
+import { GetAppointmentsInput } from './dto/get-nurse-bookings.input';
+
 @Resolver(() => BookingDto)
 export class BookingResolver {
   constructor(private service: BookingService) {}
+
+  @Query(() => [BookingDto])
+  async getBookings(
+    @Args('input') input: GetAppointmentsInput,
+  ): Promise<BookingDto[]> {
+    const result = await this.service.getByNurseAndDateOrRange(input);
+    return plainToInstance(BookingDto, result);
+  }
 
   @Mutation(() => BookingDto)
   async cancelBooking(
