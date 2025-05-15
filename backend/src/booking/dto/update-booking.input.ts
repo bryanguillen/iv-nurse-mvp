@@ -1,13 +1,13 @@
-import { InputType, Field } from '@nestjs/graphql'
+import { InputType, Field } from '@nestjs/graphql';
 
 @InputType()
 export class UpdateBookingInput {
   @Field()
-  bookingId: string
+  bookingId: string;
 
   @Field()
-  newStartTime: Date
+  newStartTime: Date;
 
   @Field()
-  newEndTime: Date
+  newEndTime: Date;
 }
