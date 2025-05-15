@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { BookingEntity } from './booking.entity';
 import { CreateBookingInput } from './dto/create-booking.input';
+import { UpdateBookingInput } from './dto/update-booking.input';
 
 @Injectable()
 export class BookingService {
@@ -14,5 +15,17 @@ export class BookingService {
   async create(input: CreateBookingInput): Promise<BookingEntity> {
     const record = this.repo.create(input);
     return this.repo.save(record);
+  }
+
+  async modify(input: UpdateBookingInput): Promise<BookingEntity> {
+    const { bookingId, newStartTime, newEndTime } = input;
+
+    const booking = await this.repo.findOne({ where: { id: bookingId } })
+    if (!booking) throw new Error('Booking not found')
+  
+    booking.startTime = newStartTime
+    booking.endTime = newEndTime
+  
+    return this.repo.save(booking)
   }
 }
