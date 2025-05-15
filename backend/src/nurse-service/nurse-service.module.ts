@@ -7,5 +7,6 @@ import { NurseServiceResolver } from './nurse-service.resolver';
 @Module({
   imports: [TypeOrmModule.forFeature([NurseServiceEntity])],
   providers: [NurseServiceService, NurseServiceResolver],
+  exports: [NurseServiceService],
 })
 export class NurseServiceModule {}
