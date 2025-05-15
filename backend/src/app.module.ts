@@ -11,6 +11,7 @@ import databaseConfig from './config/database.config';
 import { SupabaseAuthGuard } from './auth/supabase-auth.guard';
 import { NurseServiceModule } from './nurse-service/nurse-service.module';
 import { PersonUuidModule } from './person-uuid/person-uuid.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { PersonUuidModule } from './person-uuid/person-uuid.module';
     NurseAvailabilityModule,
     NurseServiceModule,
     PersonUuidModule,
+    BookingModule,
   ],
   providers: [
     {
