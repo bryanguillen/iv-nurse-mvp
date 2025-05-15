@@ -4,10 +4,18 @@ import { BookingService } from './booking.service';
 import { BookingDto } from './dto/booking.dto';
 import { CreateBookingInput } from './dto/create-booking.input';
 import { UpdateBookingInput } from './dto/update-booking.input';
-
+import { CancelBookingInput } from './dto/cancel-booking.input';
 @Resolver(() => BookingDto)
 export class BookingResolver {
   constructor(private service: BookingService) {}
+
+  @Mutation(() => BookingDto)
+  async cancelBooking(
+    @Args('input') input: CancelBookingInput,
+  ): Promise<BookingDto> {
+    const result = await this.service.cancel(input);
+    return plainToInstance(BookingDto, result);
+  }
 
   @Mutation(() => BookingDto)
   async createBooking(
