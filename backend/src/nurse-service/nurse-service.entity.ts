@@ -3,11 +3,12 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  OneToOne,
   JoinColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { NurseUuidEntity } from '../nurse-uuid/nurse-uuid.entity';
+import { BookingEntity } from '../booking/booking.entity';
 
 @Entity('nurse_service')
 export class NurseServiceEntity {
@@ -20,6 +21,9 @@ export class NurseServiceEntity {
   @ManyToOne(() => NurseUuidEntity, (nurse) => nurse.services)
   @JoinColumn({ name: 'nurse_id' })
   nurse: NurseUuidEntity;
+
+  @OneToMany(() => BookingEntity, (booking) => booking.service)
+  bookings: BookingEntity[];
 
   @Column()
   name: string;
