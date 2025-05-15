@@ -7,5 +7,6 @@ import { NurseAvailabilityResolver } from './nurse-availability.resolver';
 @Module({
   imports: [TypeOrmModule.forFeature([NurseAvailabilityEntity])],
   providers: [NurseAvailabilityService, NurseAvailabilityResolver],
+  exports: [NurseAvailabilityService],
 })
 export class NurseAvailabilityModule {}
