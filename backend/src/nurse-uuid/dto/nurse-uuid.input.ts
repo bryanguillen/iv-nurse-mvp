@@ -4,4 +4,7 @@ import { InputType, Field } from '@nestjs/graphql';
 export class CreateNurseUuidInput {
   @Field()
   supabaseId: string;
+
+  @Field()
+  timezone: string;
 }

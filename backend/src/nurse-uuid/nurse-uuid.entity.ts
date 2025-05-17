@@ -11,6 +11,9 @@ export class NurseUuidEntity {
   @Column({ unique: true, name: 'supabase_id' })
   supabaseId: string;
 
+  @Column({ name: 'timezone', type: 'text', default: 'America/New_York' })
+  timezone: string;
+
   @OneToMany(
     () => NurseAvailabilityEntity,
     (availability) => availability.nurse,

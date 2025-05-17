@@ -14,7 +14,10 @@ export class NurseUuidResolver {
   async createNurseUuid(
     @Args('input') input: CreateNurseUuidInput,
   ): Promise<NurseUuid> {
-    return this.nurseUuidService.createNurseUuid(input.supabaseId);
+    return this.nurseUuidService.createNurseUuid(
+      input.supabaseId,
+      input.timezone,
+    );
   }
 
   @Query(() => NurseUuid, { nullable: true })

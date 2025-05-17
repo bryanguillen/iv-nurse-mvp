@@ -9,5 +9,8 @@ export class NurseUuid {
   supabaseId: string;
 
   @Field()
+  timezone: string;
+
+  @Field()
   createdAt: Date;
 }
