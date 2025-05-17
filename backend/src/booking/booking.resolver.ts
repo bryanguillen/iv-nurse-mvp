@@ -6,6 +6,7 @@ import { CreateBookingInput } from './dto/create-booking.input';
 import { UpdateBookingInput } from './dto/update-booking.input';
 import { CancelBookingInput } from './dto/cancel-booking.input';
 import { GetAppointmentsInput } from './dto/get-nurse-bookings.input';
+import { Public } from '../auth/supabase-auth.guard';
 
 @Resolver(() => BookingDto)
 export class BookingResolver {
@@ -19,6 +20,7 @@ export class BookingResolver {
     return plainToInstance(BookingDto, result);
   }
 
+  @Public()
   @Mutation(() => BookingDto)
   async cancelBooking(
     @Args('input') input: CancelBookingInput,
@@ -27,6 +29,7 @@ export class BookingResolver {
     return plainToInstance(BookingDto, result);
   }
 
+  @Public()
   @Mutation(() => BookingDto)
   async createBooking(
     @Args('input') input: CreateBookingInput,
@@ -35,6 +38,7 @@ export class BookingResolver {
     return plainToInstance(BookingDto, result);
   }
 
+  @Public()
   @Mutation(() => BookingDto)
   async modifyBooking(
     @Args('input') input: UpdateBookingInput,
