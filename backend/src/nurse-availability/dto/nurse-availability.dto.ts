@@ -12,9 +12,6 @@ export class NurseAvailabilityDto {
   dayOfWeek: number;
 
   @Field()
-  timezone: string;
-
-  @Field()
   startTime: string;
 
   @Field()

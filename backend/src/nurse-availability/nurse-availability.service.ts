@@ -23,7 +23,6 @@ export class NurseAvailabilityService {
         dayOfWeek: slot.dayOfWeek,
         startTime: slot.startTime,
         endTime: slot.endTime,
-        timezone: slot.timezone,
       }),
     );
 
