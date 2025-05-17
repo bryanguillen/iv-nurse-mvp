@@ -37,10 +37,10 @@ export class BookingEntity {
   @JoinColumn({ name: 'service_id' })
   service: NurseServiceEntity;
 
-  @Column({ name: 'start_time', type: 'timestamp' })
+  @Column({ name: 'start_time', type: 'timestamptz' })
   startTime: Date;
 
-  @Column({ name: 'end_time', type: 'timestamp' })
+  @Column({ name: 'end_time', type: 'timestamptz' })
   endTime: Date;
 
   @Column({ name: 'notes', type: 'text', nullable: true })
