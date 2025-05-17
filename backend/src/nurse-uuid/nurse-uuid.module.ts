@@ -7,5 +7,6 @@ import { NurseUuidResolver } from './nurse-uuid.resolver';
 @Module({
   imports: [TypeOrmModule.forFeature([NurseUuidEntity])],
   providers: [NurseUuidService, NurseUuidResolver],
+  exports: [NurseUuidService],
 })
 export class NurseUuidModule {}

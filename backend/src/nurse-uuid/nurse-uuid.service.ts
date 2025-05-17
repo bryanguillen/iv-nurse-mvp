@@ -28,4 +28,10 @@ export class NurseUuidService {
       where: { supabaseId },
     });
   }
+
+  async getNurseById(id: string): Promise<NurseUuidEntity> {
+    return this.nurseUuidRepository.findOneOrFail({
+      where: { id },
+    });
+  }
 }
