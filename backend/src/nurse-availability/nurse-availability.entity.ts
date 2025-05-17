@@ -28,6 +28,9 @@ export class NurseAvailabilityEntity {
   @Column({ name: 'start_time', type: 'time' })
   startTime: string;
 
+  @Column({ name: 'timezone', type: 'text', default: 'America/New_York' })
+  timezone: string;
+
   @Column({ name: 'end_time', type: 'time' })
   endTime: string;
 

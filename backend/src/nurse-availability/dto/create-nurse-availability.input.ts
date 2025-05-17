@@ -10,6 +10,9 @@ export class NurseAvailabilitySlotInput {
 
   @Field()
   endTime: string;
+
+  @Field()
+  timezone: string;
 }
 
 @InputType()
