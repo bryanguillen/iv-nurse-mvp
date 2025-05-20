@@ -1,0 +1,6 @@
+query GetOrganizationByUuid($id: String!) {
+  getOrganizationRecord(id: $id) {
+    id
+    supabaseOrgId
+  }
+}
