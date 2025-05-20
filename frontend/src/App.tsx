@@ -11,14 +11,14 @@ export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/booking/:orgId">
+        <Route index element={<BookingLanding />} />
+        <Route path="create" element={<BookingCreate />} />
+      </Route>
       <Route element={<ProtectedLayout />}>
         <Route path="/" element={<Dashboard />} />
         <Route path="/setup" element={<Setup />} />
         <Route path="/settings" element={<Settings />} />
-      </Route>
-      <Route path="/booking/:orgId">
-        <Route index element={<BookingLanding />} />
-        <Route path="create" element={<BookingCreate />} />
       </Route>
     </Routes>
   );
