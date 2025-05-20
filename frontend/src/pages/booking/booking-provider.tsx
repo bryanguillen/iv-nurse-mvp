@@ -1,5 +1,6 @@
 import { createContext, useContext, useMemo } from 'react';
 import { useParams, Outlet } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import { useGetOrganizationByUuidQuery } from '@/gql/queries/GetOrganizationByUuid.generated';
 import { Spinner } from '@/components/ui/spinner';
@@ -27,9 +28,14 @@ export function useBooking() {
 export function BookingProvider() {
   const { orgId } = useParams<{ orgId: string }>();
 
-  const { data, loading } = useGetOrganizationByUuidQuery({
+  const { data, loading, error } = useGetOrganizationByUuidQuery({
     variables: { id: orgId ?? '' },
     skip: !orgId,
+    onError: () => {
+      toast.error(
+        'Oops, looks like there was an error when loading. Please try again. If it persists, reach out to our team.'
+      );
+    },
   });
 
   const contextValue = useMemo(
@@ -40,7 +46,7 @@ export function BookingProvider() {
     [data, loading]
   );
 
-  if (loading) {
+  if (loading || error) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Spinner />
