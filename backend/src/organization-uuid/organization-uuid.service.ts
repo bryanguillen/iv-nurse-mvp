@@ -17,4 +17,8 @@ export class OrganizationUuidService {
     const record = this.repo.create({ supabaseOrgId: input.supabaseOrgId });
     return this.repo.save(record);
   }
+
+  async getById(id: string): Promise<OrganizationUuidEntity | null> {
+    return this.repo.findOne({ where: { id } });
+  }
 }
