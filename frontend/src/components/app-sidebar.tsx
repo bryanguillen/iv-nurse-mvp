@@ -1,5 +1,6 @@
-import { Home, Settings } from 'lucide-react';
+import { Home, Settings, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/config/supabase';
 
 import {
   Sidebar,
@@ -27,6 +28,15 @@ const items = [
 ];
 
 export function AppSidebar() {
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+      window.location.href = '/login';
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -44,6 +54,12 @@ export function AppSidebar() {
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <SidebarMenuItem>
+                <SidebarMenuButton className="cursor-pointer" onClick={handleLogout}>
+                  <LogOut />
+                  <span>Logout</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
