@@ -5,17 +5,12 @@ import { toast } from 'sonner';
 import { useGetOrganizationByUuidQuery } from '@/gql/queries/GetOrganizationByUuid.generated';
 import { Spinner } from '@/components/ui/spinner';
 
-interface Organization {
+interface OrganizationContextType {
   id: string;
   supabaseOrgId: string;
 }
 
-interface BookingContextType {
-  organization: Organization | null;
-  loading: boolean;
-}
-
-const BookingContext = createContext<BookingContextType | undefined>(undefined);
+const BookingContext = createContext<OrganizationContextType | undefined>(undefined);
 
 export function useBooking() {
   const context = useContext(BookingContext);
@@ -38,15 +33,15 @@ export function BookingProvider() {
     },
   });
 
-  const contextValue = useMemo(
-    () => ({
-      organization: data?.getOrganizationRecord ?? null,
-      loading,
-    }),
-    [data, loading]
+  const contextValue: OrganizationContextType | undefined = useMemo(
+    () => data?.getOrganizationRecord && {
+      id: data?.getOrganizationRecord?.id ?? '',
+      supabaseOrgId: data?.getOrganizationRecord?.supabaseOrgId ?? '',
+    },
+    [data]
   );
 
-  if (loading || error || contextValue.organization === null) {
+  if (loading || error || !contextValue) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Spinner />
