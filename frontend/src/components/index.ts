@@ -10,3 +10,4 @@ export * from './ui/sonner';
 
 export * from './app-sidebar';
 export * from './ProtectedLayout';
+export * from './page-container';
