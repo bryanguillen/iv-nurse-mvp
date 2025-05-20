@@ -49,6 +49,7 @@ export default function Setup() {
         variables: {
           nurseId: user.id,
           orgId: orgId ?? '',
+          timezone: 'America/New_York',
         },
       });
 

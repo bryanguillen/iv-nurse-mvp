@@ -1,5 +1,5 @@
-mutation SaveSupabaseIds($nurseId: String!, $orgId: String!) {
-  createNurseUuid(input: { supabaseId: $nurseId }) {
+mutation SaveSupabaseIds($nurseId: String!, $orgId: String!, $timezone: String!) {
+  createNurseUuid(input: { supabaseId: $nurseId, timezone: $timezone }) {
     id
     supabaseId
   }
