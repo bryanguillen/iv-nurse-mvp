@@ -1,10 +1,10 @@
 import { BasicInfo } from './basic-info';
 import { AvailabilityServicesInfo } from './availability-services-info';
-import { Alert, AlertDescription } from '@/components';
+import { Alert, AlertDescription, PageContainer } from '@/components';
 
 export function Settings() {
   return (
-    <div className="max-w-md mx-auto flex flex-col gap-4">
+    <PageContainer>
       <h1 className="text-3xl font-bold">Settings</h1>
       <Alert variant="info">
         <AlertDescription>
@@ -16,6 +16,6 @@ export function Settings() {
       </Alert>
       <BasicInfo />
       <AvailabilityServicesInfo />
-    </div>
+    </PageContainer>
   );
 }
