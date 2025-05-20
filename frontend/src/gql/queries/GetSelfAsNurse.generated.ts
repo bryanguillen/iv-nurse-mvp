@@ -20,6 +20,33 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type BookingDto = {
+  __typename?: 'BookingDto';
+  createdAt: Scalars['DateTime']['output'];
+  endTime: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  notes?: Maybe<Scalars['String']['output']>;
+  nurseId: Scalars['String']['output'];
+  personId: Scalars['String']['output'];
+  serviceId: Scalars['String']['output'];
+  startTime: Scalars['DateTime']['output'];
+  status: Scalars['String']['output'];
+  updatedAt: Scalars['DateTime']['output'];
+};
+
+export type CancelBookingInput = {
+  bookingId: Scalars['String']['input'];
+};
+
+export type CreateBookingInput = {
+  endTime: Scalars['DateTime']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+  nurseId: Scalars['String']['input'];
+  personId: Scalars['String']['input'];
+  serviceId: Scalars['String']['input'];
+  startTime: Scalars['DateTime']['input'];
+};
+
 export type CreateNurseAvailabilityInput = {
   nurseId: Scalars['String']['input'];
   slots: Array<NurseAvailabilitySlotInput>;
@@ -32,10 +59,15 @@ export type CreateNurseServicesInput = {
 
 export type CreateNurseUuidInput = {
   supabaseId: Scalars['String']['input'];
+  timezone: Scalars['String']['input'];
 };
 
 export type CreateOrganizationUuidInput = {
   supabaseOrgId: Scalars['String']['input'];
+};
+
+export type CreatePersonUuidInput = {
+  supabaseId: Scalars['String']['input'];
 };
 
 export type DeleteNurseAvailabilityInput = {
@@ -46,14 +78,29 @@ export type DeleteNurseServicesInput = {
   serviceIds: Array<Scalars['String']['input']>;
 };
 
+export type GetAppointmentsInput = {
+  end?: InputMaybe<Scalars['String']['input']>;
+  nurseId: Scalars['String']['input'];
+  start: Scalars['String']['input'];
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
+  cancelBooking: BookingDto;
   configureAvailability: Array<NurseAvailabilityDto>;
   configureNurseServices: Array<NurseServiceDto>;
+  createBooking: BookingDto;
   createNurseUuid: NurseUuid;
   createOrganizationRecord: OrganizationUuid;
+  createPersonUuid: PersonUuidDto;
   deleteAvailabilityByIds: Scalars['Boolean']['output'];
   deleteNurseServicesByIds: Scalars['Boolean']['output'];
+  modifyBooking: BookingDto;
+};
+
+
+export type MutationCancelBookingArgs = {
+  input: CancelBookingInput;
 };
 
 
@@ -67,6 +114,11 @@ export type MutationConfigureNurseServicesArgs = {
 };
 
 
+export type MutationCreateBookingArgs = {
+  input: CreateBookingInput;
+};
+
+
 export type MutationCreateNurseUuidArgs = {
   input: CreateNurseUuidInput;
 };
@@ -77,6 +129,11 @@ export type MutationCreateOrganizationRecordArgs = {
 };
 
 
+export type MutationCreatePersonUuidArgs = {
+  input: CreatePersonUuidInput;
+};
+
+
 export type MutationDeleteAvailabilityByIdsArgs = {
   input: DeleteNurseAvailabilityInput;
 };
@@ -84,6 +141,11 @@ export type MutationDeleteAvailabilityByIdsArgs = {
 
 export type MutationDeleteNurseServicesByIdsArgs = {
   input: DeleteNurseServicesInput;
+};
+
+
+export type MutationModifyBookingArgs = {
+  input: UpdateBookingInput;
 };
 
 export type NurseAvailabilityDto = {
@@ -123,6 +185,7 @@ export type NurseUuid = {
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
   supabaseId: Scalars['String']['output'];
+  timezone: Scalars['String']['output'];
 };
 
 export type OrganizationUuid = {
@@ -132,11 +195,20 @@ export type OrganizationUuid = {
   supabaseOrgId: Scalars['String']['output'];
 };
 
+export type PersonUuidDto = {
+  __typename?: 'PersonUuidDto';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['String']['output'];
+  supabaseId: Scalars['String']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getAvailabilityByNurseId: Array<NurseAvailabilityDto>;
+  getBookings: Array<BookingDto>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
   getNurseUuids?: Maybe<NurseUuid>;
+  getOrganizationRecord: OrganizationUuid;
   getSelfAsNurse?: Maybe<NurseUuid>;
 };
 
@@ -146,8 +218,24 @@ export type QueryGetAvailabilityByNurseIdArgs = {
 };
 
 
+export type QueryGetBookingsArgs = {
+  input: GetAppointmentsInput;
+};
+
+
 export type QueryGetNurseServicesByNurseIdArgs = {
   nurseId: Scalars['String']['input'];
+};
+
+
+export type QueryGetOrganizationRecordArgs = {
+  id: Scalars['String']['input'];
+};
+
+export type UpdateBookingInput = {
+  bookingId: Scalars['String']['input'];
+  newEndTime: Scalars['DateTime']['input'];
+  newStartTime: Scalars['DateTime']['input'];
 };
 
 export type GetSelfAsNurseQueryVariables = Types.Exact<{ [key: string]: never; }>;
