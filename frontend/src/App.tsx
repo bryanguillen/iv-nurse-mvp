@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
 import { Settings } from './pages/settings';
+import { BookingLanding, BookingCreate } from './pages/booking';
 
 export default function App() {
   return (
@@ -14,6 +15,10 @@ export default function App() {
         <Route path="/" element={<Dashboard />} />
         <Route path="/setup" element={<Setup />} />
         <Route path="/settings" element={<Settings />} />
+      </Route>
+      <Route path="/booking/:orgId">
+        <Route index element={<BookingLanding />} />
+        <Route path="create" element={<BookingCreate />} />
       </Route>
     </Routes>
   );
