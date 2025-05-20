@@ -1,3 +1,12 @@
-export function PageContainer({ children }: { children: React.ReactNode }) {
-  return <div className="max-w-md mx-auto flex flex-col gap-4">{children}</div>;
+import { cn } from '@/lib/utils';
+
+interface PageContainerProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+export function PageContainer({ children, className }: PageContainerProps) {
+  return (
+    <div className={cn('max-w-md mx-auto flex flex-col gap-4 py-4', className)}>{children}</div>
+  );
 }
