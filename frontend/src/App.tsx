@@ -5,8 +5,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
 import { Settings } from './pages/settings';
-import { BookingLanding, BookingCreate } from './pages/booking';
-import { BookingProvider } from './pages/booking/booking-provider';
+import { BookingLanding, BookingCreate, BookingProvider } from './pages/booking';
 
 export default function App() {
   return (
