@@ -6,12 +6,13 @@ import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
 import { Settings } from './pages/settings';
 import { BookingLanding, BookingCreate } from './pages/booking';
+import { BookingProvider } from './pages/booking/booking-provider';
 
 export default function App() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/booking/:orgId">
+      <Route path="/booking/:orgId" element={<BookingProvider />}>
         <Route index element={<BookingLanding />} />
         <Route path="create" element={<BookingCreate />} />
       </Route>
