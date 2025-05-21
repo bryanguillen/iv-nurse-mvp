@@ -45,7 +45,7 @@ export function BookingLanding() {
       <footer>
         <HeroFooterContainer>
           <h2 className="text-2xl font-bold tracking-tight">Ready to start?</h2>
-          <p className="text-sm text-muted">Schedule your visit with {name} in 60 seconds.</p>
+          <p className="text-sm text-muted">Schedule your visit with {organization?.name} in 60 seconds.</p>
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
           </Button>
