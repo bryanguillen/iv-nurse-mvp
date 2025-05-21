@@ -25,13 +25,4 @@ export class NurseUuidResolver {
     const supabaseId = context.user.id;
     return this.nurseUuidService.getNurseBySupabaseId(supabaseId);
   }
-
-  /**
-   * TEMP HACK: Remove once other queries are implemented, as
-   * this stops the query root hack.
-   */
-  @Query(() => NurseUuid, { nullable: true })
-  async getNurseUuids(): Promise<NurseUuid | null> {
-    return null;
-  }
 }
