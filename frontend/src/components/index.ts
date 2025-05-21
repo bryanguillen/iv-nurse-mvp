@@ -8,6 +8,7 @@ export * from './ui/spinner';
 export * from './ui/alert';
 export * from './ui/sonner';
 export * from './ui/textarea';
+export * from './ui/select';
 
 export * from './app-sidebar';
 export * from './ProtectedLayout';
