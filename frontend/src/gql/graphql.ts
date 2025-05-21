@@ -162,23 +162,29 @@ export type NurseAvailabilitySlotInput = {
 export type NurseServiceDto = {
   __typename?: 'NurseServiceDto';
   createdAt: Scalars['DateTime']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   durationMinutes: Scalars['Int']['output'];
   id: Scalars['String']['output'];
   name: Scalars['String']['output'];
   nurseId: Scalars['String']['output'];
   price?: Maybe<Scalars['Float']['output']>;
+  topPick?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type NurseServiceSlotInput = {
+  description?: InputMaybe<Scalars['String']['input']>;
   durationMinutes: Scalars['Int']['input'];
   name: Scalars['String']['input'];
   price?: InputMaybe<Scalars['Float']['input']>;
+  topPick?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 export type NurseUuid = {
   __typename?: 'NurseUuid';
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
+  organization: OrganizationUuid;
+  services: Array<NurseServiceDto>;
   supabaseId: Scalars['String']['output'];
   timezone: Scalars['String']['output'];
 };
@@ -201,8 +207,8 @@ export type Query = {
   __typename?: 'Query';
   getAvailabilityByNurseId: Array<NurseAvailabilityDto>;
   getBookings: Array<BookingDto>;
+  getNurseById?: Maybe<NurseUuid>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
-  getNurseUuids?: Maybe<NurseUuid>;
   getOrganizationRecord: OrganizationUuid;
   getSelfAsNurse?: Maybe<NurseUuid>;
 };
@@ -215,6 +221,11 @@ export type QueryGetAvailabilityByNurseIdArgs = {
 
 export type QueryGetBookingsArgs = {
   input: GetAppointmentsInput;
+};
+
+
+export type QueryGetNurseByIdArgs = {
+  id: Scalars['String']['input'];
 };
 
 
