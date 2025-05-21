@@ -1,5 +1,5 @@
 import { useMachine } from '@xstate/react';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Info } from 'lucide-react';
 import { useEffect } from 'react';
 
 import {
@@ -42,41 +42,41 @@ export function BookingFlow() {
   return (
     <div className="flex flex-col min-h-screen p-4">
       {/* Header */}
-      <div className="flex items-center justify-between py-2">
-        {step !== 'selectService' && (
-          <button onClick={() => send({ type: 'BACK' })} className="text-blue-600">
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-        )}
-        <h1 className="text-lg font-semibold text-center flex-1">{getTitle()}</h1>
-        <div className="w-12" />
-      </div>
+      <h1 className="text-lg font-semibold text-center">{getTitle()}</h1>
 
       {/* Content */}
       <div className="flex-1 py-4 space-y-4">
         {step === 'selectService' && (
-          <Select
-            value={context.serviceId}
-            onValueChange={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
-          >
-            <SelectTrigger className="w-full truncate">
-              <SelectValue placeholder="Select a service" />
-            </SelectTrigger>
-            <SelectContent>
-              {nurse.services.map(service => (
-                <SelectItem key={service.id} value={service.id} textValue={service.name}>
-                  <div className="flex flex-col">
-                    {service.description && (
-                      <span className="text-sm text-muted">{service.description}</span>
-                    )}
-                    {service.price && (
-                      <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
-                    )}
-                  </div>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <div className="space-y-2">
+            <Select
+              value={context.serviceId}
+              onValueChange={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
+            >
+              <SelectTrigger className="w-full truncate">
+                <SelectValue placeholder="Select a service" />
+              </SelectTrigger>
+              <SelectContent>
+                {nurse.services.map(service => (
+                  <SelectItem key={service.id} value={service.id} textValue={service.name}>
+                    <div className="flex flex-col">
+                      {service.description && (
+                        <span className="text-sm text-muted">{service.description}</span>
+                      )}
+                      {service.price && (
+                        <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
+                      )}
+                    </div>
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+            <div className="flex items-center gap-2 text-sm text-muted">
+              <Info className="size-4 text-primary" />
+              <span className="text-muted">
+                Want to combine drips? Add it in the notes section at checkout.
+              </span>
+            </div>
+          </div>
         )}
 
         {step === 'selectSlot' && (
@@ -140,11 +140,11 @@ export function BookingFlow() {
             className="w-full py-3"
             disabled={!state.can({ type: 'NEXT' })}
           >
-            Submit
+            Next
           </Button>
         ) : (
           <Button onClick={() => console.log('context', context)} className="w-full py-3">
-            Next
+            Submit
           </Button>
         )}
       </div>
