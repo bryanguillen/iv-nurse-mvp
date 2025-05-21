@@ -24,7 +24,7 @@ export function BookingLanding() {
         </HeroFooterContainer>
 
         <HeroFooterContainer>
-          <div className="space-y-6 w-full">
+          <div className="space-y-4 w-full">
             <FeatureBox
               icon={<Syringe className="w-6 h-6 text-primary" />}
               title="On-Demand Scheduling"
