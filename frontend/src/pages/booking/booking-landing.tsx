@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Syringe, CalendarCheck, FlaskConical } from 'lucide-react';
 
 import { PageContainer, Button } from '@/components';
 
@@ -9,7 +10,7 @@ export function BookingLanding() {
 
   return (
     <PageContainer className="max-w-lg">
-      <main>
+      <main className="space-y-8 mb-8">
         <HeroFooterContainer>
           <h1 className="text-3xl font-bold tracking-tight">
             Feel Better, Faster - IV Therapy Delivered to You
@@ -20,6 +21,23 @@ export function BookingLanding() {
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
           </Button>
+        </HeroFooterContainer>
+
+        <HeroFooterContainer>
+          <div className="space-y-6 w-full">
+            <FeatureBox
+              icon={<Syringe className="w-6 h-6 text-primary" />}
+              title="On-Demand Scheduling"
+            />
+            <FeatureBox
+              icon={<CalendarCheck className="w-6 h-6 text-secondary" />}
+              title="Licensed Registered Nurse"
+            />
+            <FeatureBox
+              icon={<FlaskConical className="w-6 h-6 text-primary" />}
+              title="Premium, Medical-Grade Products"
+            />
+          </div>
         </HeroFooterContainer>
       </main>
 
@@ -42,6 +60,20 @@ function HeroFooterContainer({ children }: { children: React.ReactNode }) {
       <div className="flex flex-col items-center justify-center text-center space-y-4">
         {children}
       </div>
+    </div>
+  );
+}
+
+interface FeatureBoxProps {
+  icon: React.ReactNode;
+  title: string;
+}
+
+function FeatureBox({ icon, title }: FeatureBoxProps) {
+  return (
+    <div className="flex items-center gap-4">
+      {icon}
+      <span className="font-bold">{title}</span>
     </div>
   );
 }
