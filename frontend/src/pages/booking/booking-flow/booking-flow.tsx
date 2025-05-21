@@ -1,6 +1,6 @@
 import { useMachine } from '@xstate/react';
 import { ArrowLeft } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import {
   Select,
@@ -8,7 +8,8 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+  Button,
+} from '@/components';
 
 import { bookingMachine, type BookingUserInfo } from './booking-machine';
 import { useBooking } from '../booking-provider';
@@ -134,20 +135,17 @@ export function BookingFlow() {
       {/* Footer */}
       <div className="py-2">
         {step !== 'review' ? (
-          <button
+          <Button
             onClick={() => send({ type: 'NEXT' })}
-            className="w-full py-3 bg-green-600 text-white rounded"
+            className="w-full py-3"
             disabled={!state.can({ type: 'NEXT' })}
           >
             Submit
-          </button>
+          </Button>
         ) : (
-          <button
-            onClick={() => console.log('context', context)}
-            className="w-full py-3 bg-blue-600 text-white rounded disabled:opacity-50"
-          >
+          <Button onClick={() => console.log('context', context)} className="w-full py-3">
             Next
-          </button>
+          </Button>
         )}
       </div>
     </div>
