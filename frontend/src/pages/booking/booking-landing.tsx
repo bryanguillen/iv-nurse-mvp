@@ -6,7 +6,8 @@ import { PageContainer, Button } from '@/components';
 import { useBooking } from './booking-provider';
 
 export function BookingLanding() {
-  const { organization } = useBooking();
+  const { organization, nurse } = useBooking();
+  const topPickedServices = nurse?.services?.filter(service => service.topPick) ?? [];
 
   return (
     <PageContainer className="max-w-lg">
@@ -23,6 +24,25 @@ export function BookingLanding() {
             <Link to="create">Book today</Link>
           </Button>
         </PageContentContainer>
+
+        {topPickedServices.length > 0 && (
+          <div className="space-y-4">
+            <h2 className="text-2xl font-bold tracking-tight text-center">Our Top Services</h2>
+            {topPickedServices.map(service => (
+              <div className="container mx-auto p-4 bg-white rounded-lg shadow-md" key={service.id}>
+                <div className="space-y-2">
+                  <h3 className="text-xl font-bold">{service.name}</h3>
+                  {service.description && (
+                    <p className="text-sm text-muted">{service.description}</p>
+                  )}
+                  {service.price && (
+                    <p className="text-md font-semibold">${service.price.toFixed(2)}</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
 
         <PageContentContainer>
           <div className="space-y-4 w-full">
@@ -45,7 +65,9 @@ export function BookingLanding() {
       <footer>
         <PageContentContainer>
           <h2 className="text-2xl font-bold tracking-tight">Ready to start?</h2>
-          <p className="text-sm text-muted">Schedule your visit with {organization?.name} in 60 seconds.</p>
+          <p className="text-sm text-muted">
+            Schedule your visit with {organization?.name} in 60 seconds.
+          </p>
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
           </Button>
