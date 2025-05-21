@@ -6,7 +6,7 @@ import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Setup from './pages/Setup';
 import { Settings } from './pages/settings';
-import { BookingLanding, BookingCreate, BookingProvider } from './pages/booking';
+import { BookingLanding, BookingFlow, BookingProvider } from './pages/booking';
 
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/booking/:nurseId" element={<BookingProvider />}>
           <Route index element={<BookingLanding />} />
-          <Route path="create" element={<BookingCreate />} />
+          <Route path="create" element={<BookingFlow />} />
         </Route>
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Dashboard />} />
