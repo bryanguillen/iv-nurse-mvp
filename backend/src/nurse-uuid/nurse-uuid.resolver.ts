@@ -1,5 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Mutation, Args, Query, Context } from '@nestjs/graphql';
+import { plainToInstance } from 'class-transformer';
 import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { NurseUuid } from './dto/nurse-uuid.type';
 import { NurseUuidService } from './nurse-uuid.service';
@@ -14,15 +15,18 @@ export class NurseUuidResolver {
   async createNurseUuid(
     @Args('input') input: CreateNurseUuidInput,
   ): Promise<NurseUuid> {
-    return this.nurseUuidService.createNurseUuid(
+    const nurseUuid = await this.nurseUuidService.createNurseUuid(
       input.supabaseId,
       input.timezone,
     );
+    return plainToInstance(NurseUuid, nurseUuid);
   }
 
   @Query(() => NurseUuid, { nullable: true })
   async getSelfAsNurse(@Context() context: any): Promise<NurseUuid | null> {
     const supabaseId = context.user.id;
-    return this.nurseUuidService.getNurseBySupabaseId(supabaseId);
+    const nurseUuid =
+      await this.nurseUuidService.getNurseBySupabaseId(supabaseId);
+    return plainToInstance(NurseUuid, nurseUuid);
   }
 }

@@ -1,4 +1,5 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { NurseServiceDto } from '../../nurse-service/dto/nurse-service.dto';
 
 @ObjectType()
 export class NurseUuid {
@@ -10,6 +11,9 @@ export class NurseUuid {
 
   @Field()
   timezone: string;
+
+  @Field(() => [NurseServiceDto])
+  services: NurseServiceDto[];
 
   @Field()
   createdAt: Date;

@@ -26,12 +26,14 @@ export class NurseUuidService {
   ): Promise<NurseUuidEntity | null> {
     return this.nurseUuidRepository.findOne({
       where: { supabaseId },
+      relations: ['services'],
     });
   }
 
   async getNurseById(id: string): Promise<NurseUuidEntity> {
     return this.nurseUuidRepository.findOneOrFail({
       where: { id },
+      relations: ['services'],
     });
   }
 }
