@@ -5,6 +5,7 @@ import { SupabaseAuthGuard } from '../auth/supabase-auth.guard';
 import { NurseUuid } from './dto/nurse-uuid.type';
 import { NurseUuidService } from './nurse-uuid.service';
 import { CreateNurseUuidInput } from './dto/nurse-uuid.input';
+import { Public } from '../auth/supabase-auth.guard';
 
 @Resolver(() => NurseUuid)
 @UseGuards(SupabaseAuthGuard)
@@ -27,6 +28,13 @@ export class NurseUuidResolver {
     const supabaseId = context.user.id;
     const nurseUuid =
       await this.nurseUuidService.getNurseBySupabaseId(supabaseId);
+    return plainToInstance(NurseUuid, nurseUuid);
+  }
+
+  @Public()
+  @Query(() => NurseUuid, { nullable: true })
+  async getNurseById(@Args('id') id: string): Promise<NurseUuid | null> {
+    const nurseUuid = await this.nurseUuidService.getNurseById(id);
     return plainToInstance(NurseUuid, nurseUuid);
   }
 }
