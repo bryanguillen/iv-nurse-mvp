@@ -44,22 +44,25 @@ export function BookingLanding() {
           </div>
         )}
 
-        <PageContentContainer>
-          <div className="space-y-4 w-full">
-            <FeatureBox
-              icon={<Syringe className="w-6 h-6 text-primary" />}
-              title="On-Demand Scheduling"
-            />
-            <FeatureBox
-              icon={<CalendarCheck className="w-6 h-6 text-secondary" />}
-              title="Licensed Registered Nurse"
-            />
-            <FeatureBox
-              icon={<FlaskConical className="w-6 h-6 text-primary" />}
-              title="Premium, Medical-Grade Products"
-            />
-          </div>
-        </PageContentContainer>
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold tracking-tight text-center">Why Choose Us?</h2>
+          <PageContentContainer>
+            <div className="space-y-4 w-full">
+              <FeatureBox
+                icon={<Syringe className="w-6 h-6 text-primary" />}
+                title="On-Demand Scheduling"
+              />
+              <FeatureBox
+                icon={<CalendarCheck className="w-6 h-6 text-secondary" />}
+                title="Licensed Registered Nurse"
+              />
+              <FeatureBox
+                icon={<FlaskConical className="w-6 h-6 text-primary" />}
+                title="Premium, Medical-Grade Products"
+              />
+            </div>
+          </PageContentContainer>
+        </div>
       </main>
 
       <footer>
