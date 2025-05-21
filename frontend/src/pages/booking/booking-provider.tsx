@@ -2,17 +2,30 @@ import { createContext, useContext, useMemo, useState, useEffect } from 'react';
 import { useParams, Outlet } from 'react-router-dom';
 import { toast } from 'sonner';
 
-import { useGetOrganizationByUuidQuery } from '@/gql/queries/GetOrganizationByUuid.generated';
+import { useGetNurseDataForBookingFlowQuery } from '@/gql/queries/GetNurseDataForBookingFlow.generated';
 import { Spinner } from '@/components/ui/spinner';
 import { supabase } from '@/config/supabase';
 
-interface OrganizationContextType {
-  id: string;
-  supabaseOrgId: string;
-  name: string;
+interface BookingDataContextType {
+  organization: {
+    id: string;
+    supabaseOrgId: string;
+    name: string;
+  };
+  nurse: {
+    id: string;
+    services: {
+      id: string;
+      name: string;
+      description: string;
+      price: number;
+      durationMinutes: number;
+      topPick: boolean;
+    }[];
+  };
 }
 
-const BookingContext = createContext<OrganizationContextType | undefined>(undefined);
+const BookingContext = createContext<BookingDataContextType | undefined>(undefined);
 
 export function useBooking() {
   const context = useContext(BookingContext);
@@ -23,12 +36,12 @@ export function useBooking() {
 }
 
 export function BookingProvider() {
-  const { orgId } = useParams<{ orgId: string }>();
+  const { nurseId } = useParams<{ nurseId: string }>();
   const [supabaseOrg, setSupabaseOrg] = useState<{ id: string; name: string } | null>(null);
 
-  const { data, loading, error } = useGetOrganizationByUuidQuery({
-    variables: { id: orgId ?? '' },
-    skip: !orgId,
+  const { data, loading, error } = useGetNurseDataForBookingFlowQuery({
+    variables: { nurseId: nurseId ?? '' },
+    skip: !nurseId,
     onError: () => {
       toast.error(
         'Oops, looks like there was an error when loading from our app. Please try again. If it persists, reach out to our team.'
@@ -38,13 +51,13 @@ export function BookingProvider() {
 
   // Fetch organization from Supabase once we have the supabaseOrgId
   useEffect(() => {
-    if (!data?.getOrganizationRecord?.supabaseOrgId) return;
+    if (!data?.getNurseById?.organization?.supabaseOrgId) return;
 
     const fetchSupabaseOrg = async () => {
       const { data: orgData, error: orgError } = await supabase
         .from('organizations')
         .select('id, name')
-        .eq('id', data.getOrganizationRecord.supabaseOrgId)
+        .eq('id', data.getNurseById?.organization?.supabaseOrgId)
         .single();
 
       if (orgError) {
@@ -56,15 +69,28 @@ export function BookingProvider() {
     };
 
     fetchSupabaseOrg();
-  }, [data?.getOrganizationRecord?.supabaseOrgId, setSupabaseOrg]);
+  }, [data?.getNurseById?.organization?.supabaseOrgId, setSupabaseOrg]);
 
-  const contextValue = useMemo(
+  const contextValue: BookingDataContextType | undefined | null = useMemo(
     () =>
-      data?.getOrganizationRecord &&
+      data?.getNurseById &&
       supabaseOrg && {
-        id: data?.getOrganizationRecord.id,
-        supabaseOrgId: data?.getOrganizationRecord.supabaseOrgId,
-        name: supabaseOrg.name,
+        organization: {
+          id: data.getNurseById.organization.id,
+          supabaseOrgId: data.getNurseById.organization.supabaseOrgId,
+          name: supabaseOrg?.name,
+        },
+        nurse: {
+          id: data.getNurseById.id,
+          services: data.getNurseById.services.map(service => ({
+            id: service.id,
+            name: service.name,
+            description: service.description ?? '',
+            price: service.price ?? 0,
+            durationMinutes: service.durationMinutes ?? 0,
+            topPick: service.topPick ?? false,
+          })),
+        },
       },
     [data, supabaseOrg]
   );

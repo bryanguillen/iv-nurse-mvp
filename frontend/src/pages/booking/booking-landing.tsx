@@ -6,7 +6,7 @@ import { PageContainer, Button } from '@/components';
 import { useBooking } from './booking-provider';
 
 export function BookingLanding() {
-  const { name } = useBooking();
+  const { organization } = useBooking();
 
   return (
     <PageContainer className="max-w-lg">
@@ -16,7 +16,8 @@ export function BookingLanding() {
             Feel Better, Faster - IV Therapy Delivered to You
           </h1>
           <p className="text-sm text-muted max-w-2xl">
-            Schedule your visit with {name} in 60 seconds. We're here to provide the care you need.
+            Schedule your visit with {organization?.name} in 60 seconds. We're here to provide the
+            care you need.
           </p>
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
