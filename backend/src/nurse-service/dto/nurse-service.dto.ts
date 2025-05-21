@@ -17,6 +17,12 @@ export class NurseServiceDto {
   @Field(() => Float, { nullable: true })
   price?: number;
 
+  @Field(() => String, { nullable: true })
+  description?: string;
+
+  @Field(() => Boolean, { nullable: true })
+  topPick?: boolean;
+
   @Field()
   createdAt: Date;
 }

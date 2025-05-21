@@ -34,6 +34,12 @@ export class NurseServiceEntity {
   @Column({ type: 'numeric', nullable: true })
   price: number | null;
 
+  @Column({ type: 'text', nullable: true })
+  description: string | null;
+
+  @Column({ type: 'boolean', default: false, name: 'top_pick' })
+  topPick: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 }

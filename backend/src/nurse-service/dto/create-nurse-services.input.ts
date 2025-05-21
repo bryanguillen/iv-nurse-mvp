@@ -10,6 +10,12 @@ export class NurseServiceSlotInput {
 
   @Field(() => Float, { nullable: true })
   price?: number;
+
+  @Field(() => Boolean, { nullable: true })
+  topPick?: boolean;
+
+  @Field(() => String, { nullable: true })
+  description?: string;
 }
 
 @InputType()
