@@ -29,7 +29,7 @@ export function BookingFlow() {
       case 'selectService':
         return 'Choose a Service';
       case 'selectSlot':
-        return 'Choose a Slot';
+        return 'Pick Date & Time';
       case 'userInfo':
         return 'Your Info';
       case 'review':
