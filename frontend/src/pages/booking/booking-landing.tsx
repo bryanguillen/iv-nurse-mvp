@@ -11,7 +11,7 @@ export function BookingLanding() {
   return (
     <PageContainer className="max-w-lg">
       <main className="space-y-8 mb-8">
-        <HeroFooterContainer>
+        <PageContentContainer>
           <h1 className="text-3xl font-bold tracking-tight">
             Feel Better, Faster - IV Therapy Delivered to You
           </h1>
@@ -22,9 +22,9 @@ export function BookingLanding() {
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
           </Button>
-        </HeroFooterContainer>
+        </PageContentContainer>
 
-        <HeroFooterContainer>
+        <PageContentContainer>
           <div className="space-y-4 w-full">
             <FeatureBox
               icon={<Syringe className="w-6 h-6 text-primary" />}
@@ -39,23 +39,23 @@ export function BookingLanding() {
               title="Premium, Medical-Grade Products"
             />
           </div>
-        </HeroFooterContainer>
+        </PageContentContainer>
       </main>
 
       <footer>
-        <HeroFooterContainer>
+        <PageContentContainer>
           <h2 className="text-2xl font-bold tracking-tight">Ready to start?</h2>
           <p className="text-sm text-muted">Schedule your visit with {organization?.name} in 60 seconds.</p>
           <Button asChild size="lg" className="w-full md:w-auto">
             <Link to="create">Book today</Link>
           </Button>
-        </HeroFooterContainer>
+        </PageContentContainer>
       </footer>
     </PageContainer>
   );
 }
 
-function HeroFooterContainer({ children }: { children: React.ReactNode }) {
+function PageContentContainer({ children }: { children: React.ReactNode }) {
   return (
     <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
       <div className="flex flex-col items-center justify-center text-center space-y-4">
