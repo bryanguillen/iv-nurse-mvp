@@ -1,7 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { NurseAvailabilityEntity } from '../nurse-availability/nurse-availability.entity';
 import { NurseServiceEntity } from '../nurse-service/nurse-service.entity';
 import { BookingEntity } from '../booking/booking.entity';
+import { OrganizationUuidEntity } from '../organization-uuid/organization-uuid.entity';
 
 @Entity('nurse_uuids')
 export class NurseUuidEntity {
@@ -13,6 +21,13 @@ export class NurseUuidEntity {
 
   @Column({ name: 'timezone', type: 'text', default: 'America/New_York' })
   timezone: string;
+
+  @Column({ name: 'organization_id' })
+  organizationId: string;
+
+  @ManyToOne(() => OrganizationUuidEntity)
+  @JoinColumn({ name: 'organization_id' })
+  organization: OrganizationUuidEntity;
 
   @OneToMany(
     () => NurseAvailabilityEntity,
