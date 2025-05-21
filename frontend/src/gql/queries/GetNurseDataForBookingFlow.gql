@@ -1,0 +1,17 @@
+query GetNurseDataForBookingFlow($nurseId: String!) {
+  getNurseById(id: $nurseId) {
+    id
+    services {
+      id
+      name
+      description
+      price
+      durationMinutes
+      topPick
+    }
+    organization {
+      id
+      supabaseOrgId
+    }
+  }
+}
