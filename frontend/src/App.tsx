@@ -13,7 +13,7 @@ export default function App() {
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/booking/:orgId" element={<BookingProvider />}>
+        <Route path="/booking/:nurseId" element={<BookingProvider />}>
           <Route index element={<BookingLanding />} />
           <Route path="create" element={<BookingCreate />} />
         </Route>
