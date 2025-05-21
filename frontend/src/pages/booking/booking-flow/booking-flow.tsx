@@ -1,5 +1,6 @@
 import { useMachine } from '@xstate/react';
 import { ArrowLeft } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 import {
   Select,
@@ -17,6 +18,10 @@ export function BookingFlow() {
   const { nurse } = useBooking();
   const step = state.value;
   const context = state.context;
+
+  useEffect(() => {
+    // No need to setSelectedServiceId as we're using context.serviceId directly
+  }, [context.serviceId]);
 
   const getTitle = () => {
     switch (step) {
@@ -53,14 +58,13 @@ export function BookingFlow() {
             value={context.serviceId}
             onValueChange={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
           >
-            <SelectTrigger className="w-full">
+            <SelectTrigger className="w-full truncate">
               <SelectValue placeholder="Select a service" />
             </SelectTrigger>
             <SelectContent>
               {nurse.services.map(service => (
-                <SelectItem key={service.id} value={service.id}>
+                <SelectItem key={service.id} value={service.id} textValue={service.name}>
                   <div className="flex flex-col">
-                    <span>{service.name}</span>
                     {service.description && (
                       <span className="text-sm text-muted">{service.description}</span>
                     )}
