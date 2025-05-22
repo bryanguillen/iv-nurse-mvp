@@ -6,8 +6,11 @@ export class SlotFinderInput {
   nurseId: string;
 
   @Field()
-  start: string;
+  serviceId: string;
 
   @Field()
-  end: string;
+  start: string;
+
+  @Field({ nullable: true })
+  end?: string;
 }
