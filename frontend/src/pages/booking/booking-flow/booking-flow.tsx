@@ -7,6 +7,7 @@ import { bookingMachine } from './booking-machine';
 import { ServiceSelector } from './service-selector';
 import { DateSelector } from './date-selector';
 import { UserInfoForm } from './user-info-form';
+import { Review } from './review';
 
 export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
@@ -29,6 +30,10 @@ export function BookingFlow() {
         [field]: value,
       },
     });
+  };
+
+  const handleConfirm = (confirmed: boolean) => {
+    send({ type: 'CONFIRM', confirmed });
   };
 
   const getTitle = () => {
@@ -78,20 +83,13 @@ export function BookingFlow() {
         )}
 
         {step === 'review' && (
-          <div className="space-y-2 text-sm">
-            <p>
-              <strong>Service:</strong> {context.serviceId}
-            </p>
-            <p>
-              <strong>Date:</strong> {context.selectedDate}
-            </p>
-            <p>
-              <strong>Name:</strong> {context.userInfo?.firstName}
-            </p>
-            <p>
-              <strong>Phone:</strong> {context.userInfo?.phone}
-            </p>
-          </div>
+          <Review
+            serviceId={context.serviceId ?? ''}
+            selectedDate={context.selectedDate ?? ''}
+            userInfo={userInfo}
+            confirmed={context.confirmed ?? false}
+            onConfirm={handleConfirm}
+          />
         )}
       </div>
 
@@ -112,7 +110,11 @@ export function BookingFlow() {
           </Button>
         )}
         {step === 'review' && (
-          <Button onClick={() => console.log('context', context)} className="flex-1 py-3">
+          <Button
+            onClick={() => console.log('context', context)}
+            className="flex-1 py-3"
+            disabled={!context.confirmed}
+          >
             Submit
           </Button>
         )}
