@@ -129,15 +129,27 @@ export function BookingFlow() {
 
       {/* Footer */}
       <div className="py-2">
-        {step !== 'review' ? (
-          <Button
-            onClick={() => send({ type: 'NEXT' })}
-            className="w-full py-3"
-            disabled={!state.can({ type: 'NEXT' })}
-          >
-            Next
-          </Button>
-        ) : (
+        {step !== 'review' && (
+          <div className="flex gap-2">
+            {step !== 'selectService' && (
+              <Button
+                onClick={() => send({ type: 'BACK' })}
+                className="flex-1 py-3"
+                variant="outline"
+              >
+                Back
+              </Button>
+            )}
+            <Button
+              onClick={() => send({ type: 'NEXT' })}
+              className="flex-1 py-3"
+              disabled={!state.can({ type: 'NEXT' })}
+            >
+              Next
+            </Button>
+          </div>
+        )}
+        {step === 'review' && (
           <Button onClick={() => console.log('context', context)} className="w-full py-3">
             Submit
           </Button>
