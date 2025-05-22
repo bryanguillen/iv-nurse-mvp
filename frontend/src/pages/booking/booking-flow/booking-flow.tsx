@@ -1,15 +1,35 @@
 import { useMachine } from '@xstate/react';
+import type { BookingUserInfo } from './booking-machine';
 
 import { Button } from '@/components';
 
-import { bookingMachine, type BookingUserInfo } from './booking-machine';
+import { bookingMachine } from './booking-machine';
 import { ServiceSelector } from './service-selector';
 import { DateSelector } from './date-selector';
+import { UserInfoForm } from './user-info-form';
 
 export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
   const step = state.value;
   const context = state.context;
+  const userInfo = context.userInfo ?? {
+    firstName: '',
+    phone: '',
+    streetAddress: '',
+    city: '',
+    state: '',
+    zip: '',
+  };
+
+  const handleUserInfoChange = (field: keyof BookingUserInfo, value: string) => {
+    send({
+      type: 'UPDATE_USER',
+      userInfo: {
+        ...userInfo,
+        [field]: value,
+      },
+    });
+  };
 
   const getTitle = () => {
     switch (step) {
@@ -54,22 +74,7 @@ export function BookingFlow() {
         )}
 
         {step === 'userInfo' && (
-          <>
-            <input
-              className="w-full p-2 border rounded"
-              placeholder="Name"
-              value={context.userInfo?.firstName || ''}
-              onChange={e =>
-                send({
-                  type: 'UPDATE_USER',
-                  userInfo: {
-                    ...(context.userInfo as BookingUserInfo),
-                    firstName: e.target.value ?? '',
-                  },
-                })
-              }
-            />
-          </>
+          <UserInfoForm userInfo={userInfo} onChange={handleUserInfoChange} />
         )}
 
         {step === 'review' && (
