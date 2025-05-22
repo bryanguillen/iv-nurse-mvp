@@ -1,21 +1,12 @@
 import { useMachine } from '@xstate/react';
-import { Info } from 'lucide-react';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  Button,
-} from '@/components';
+import { Button } from '@/components';
 
 import { bookingMachine, type BookingUserInfo } from './booking-machine';
-import { useBooking } from '../booking-provider';
+import { ServiceSelector } from './service-selector';
 
 export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
-  const { nurse } = useBooking();
   const step = state.value;
   const context = state.context;
 
@@ -42,36 +33,10 @@ export function BookingFlow() {
       {/* Content */}
       <div className="flex-1 py-4 space-y-4">
         {step === 'selectService' && (
-          <div className="space-y-2">
-            <Select
-              value={context.serviceId ?? ''}
-              onValueChange={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
-            >
-              <SelectTrigger className="w-full truncate">
-                <SelectValue placeholder="Select a service" />
-              </SelectTrigger>
-              <SelectContent>
-                {nurse.services.map(service => (
-                  <SelectItem key={service.id} value={service.id} textValue={service.name}>
-                    <div className="flex flex-col">
-                      {service.description && (
-                        <span className="text-sm text-muted">{service.description}</span>
-                      )}
-                      {service.price && (
-                        <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
-                      )}
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <div className="flex items-center gap-2 text-sm text-muted">
-              <Info className="size-4 text-primary" />
-              <span className="text-muted">
-                Want to combine drips? Add it in the notes section at checkout.
-              </span>
-            </div>
-          </div>
+          <ServiceSelector
+            selectedServiceId={context.serviceId}
+            onServiceSelect={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
+          />
         )}
 
         {step === 'selectSlot' && (
