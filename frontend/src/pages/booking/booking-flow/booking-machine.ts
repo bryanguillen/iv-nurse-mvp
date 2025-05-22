@@ -16,11 +16,13 @@ export const bookingMachine = createMachine({
       serviceId?: string;
       selectedDate?: string;
       userInfo?: BookingUserInfo;
+      confirmed?: boolean;
     },
     events: {} as
       | { type: 'SELECT_SERVICE'; serviceId: string }
       | { type: 'SELECT_SLOT'; date: string }
       | { type: 'UPDATE_USER'; userInfo: BookingUserInfo }
+      | { type: 'CONFIRM'; confirmed: boolean }
       | { type: 'NEXT' }
       | { type: 'BACK' },
   },
@@ -79,6 +81,11 @@ export const bookingMachine = createMachine({
     },
     review: {
       on: {
+        CONFIRM: {
+          actions: assign(({ event }) => ({
+            confirmed: event.confirmed,
+          })),
+        },
         BACK: 'userInfo',
       },
     },
