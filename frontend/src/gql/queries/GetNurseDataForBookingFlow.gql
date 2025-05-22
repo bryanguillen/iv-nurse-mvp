@@ -1,6 +1,7 @@
 query GetNurseDataForBookingFlow($nurseId: String!) {
   getNurseById(id: $nurseId) {
     id
+    timezone
     services {
       id
       name
