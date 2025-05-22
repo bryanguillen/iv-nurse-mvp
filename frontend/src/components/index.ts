@@ -9,6 +9,8 @@ export * from './ui/alert';
 export * from './ui/sonner';
 export * from './ui/textarea';
 export * from './ui/select';
+export * from './ui/popover';
+export * from './ui/tooltip';
 
 export * from './app-sidebar';
 export * from './ProtectedLayout';
