@@ -1,0 +1,12 @@
+query GetOpenSlotsForDate($nurseId: String!, $serviceId: String!, $start: String!) {
+    getAvailableSlots(input: {
+        nurseId: $nurseId
+        serviceId: $serviceId
+        start: $start
+    }) {
+        nurseId
+        serviceId
+        startTime
+        endTime
+    }
+}
