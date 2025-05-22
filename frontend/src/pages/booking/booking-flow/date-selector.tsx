@@ -20,8 +20,10 @@ interface DateSelectorProps {
 export function DateSelector({ selectedDate, serviceId, onDateSelect }: DateSelectorProps) {
   const { nurse } = useBooking();
 
-  const [localDate, setLocalDate] = useState<string | undefined>(selectedDate);
-  const [selectedSlot, setSelectedSlot] = useState<string | undefined>();
+  const [localDate, setLocalDate] = useState<string | undefined>(
+    selectedDate ? format(new Date(selectedDate), 'yyyy-MM-dd') : undefined
+  );
+  const [selectedSlot, setSelectedSlot] = useState<string | undefined>(selectedDate);
   const [calendarOpen, setCalendarOpen] = useState(false);
 
   const { data, loading } = useGetOpenSlotsForDateQuery({
