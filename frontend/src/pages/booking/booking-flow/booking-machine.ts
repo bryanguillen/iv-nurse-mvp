@@ -1,4 +1,4 @@
-import { createMachine } from 'xstate';
+import { createMachine, assign } from 'xstate';
 
 export interface BookingUserInfo {
   firstName: string;
@@ -33,9 +33,9 @@ export const bookingMachine = createMachine({
     selectService: {
       on: {
         SELECT_SERVICE: {
-          actions: ({ context, event }) => {
-            context.serviceId = event.serviceId;
-          },
+          actions: assign(({ event }) => ({
+            serviceId: event.serviceId,
+          })),
         },
         NEXT: {
           guard: ({ context }) => !!context.serviceId,
@@ -46,9 +46,9 @@ export const bookingMachine = createMachine({
     selectSlot: {
       on: {
         SELECT_SLOT: {
-          actions: ({ context, event }) => {
-            context.selectedDate = event.date;
-          },
+          actions: assign(({ event }) => ({
+            selectedDate: event.date,
+          })),
         },
         NEXT: {
           guard: ({ context }) => !!context.selectedDate,
@@ -60,9 +60,9 @@ export const bookingMachine = createMachine({
     userInfo: {
       on: {
         UPDATE_USER: {
-          actions: ({ context, event }) => {
-            context.userInfo = event.userInfo;
-          },
+          actions: assign(({ event }) => ({
+            userInfo: event.userInfo,
+          })),
         },
         NEXT: {
           guard: ({ context }) =>
