@@ -4,6 +4,7 @@ import { Button } from '@/components';
 
 import { bookingMachine, type BookingUserInfo } from './booking-machine';
 import { ServiceSelector } from './service-selector';
+import { DateSelector } from './date-selector';
 
 export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
@@ -40,19 +41,15 @@ export function BookingFlow() {
         )}
 
         {step === 'selectSlot' && (
-          <>
-            <input
-              type="date"
-              className="w-full p-2 border rounded"
-              value={context.selectedDate || ''}
-              onChange={e =>
-                send({
-                  type: 'SELECT_SLOT',
-                  date: e.target.value,
-                })
-              }
-            />
-          </>
+          <DateSelector
+            selectedDate={context.selectedDate ? new Date(context.selectedDate) : undefined}
+            onDateSelect={date =>
+              send({
+                type: 'SELECT_SLOT',
+                date: date?.toISOString() ?? '',
+              })
+            }
+          />
         )}
 
         {step === 'userInfo' && (
