@@ -1,6 +1,5 @@
 import { useMachine } from '@xstate/react';
-import { ArrowLeft, Info } from 'lucide-react';
-import { useEffect } from 'react';
+import { Info } from 'lucide-react';
 
 import {
   Select,
@@ -19,10 +18,6 @@ export function BookingFlow() {
   const { nurse } = useBooking();
   const step = state.value;
   const context = state.context;
-
-  useEffect(() => {
-    // No need to setSelectedServiceId as we're using context.serviceId directly
-  }, [context.serviceId]);
 
   const getTitle = () => {
     switch (step) {
