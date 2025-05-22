@@ -42,13 +42,14 @@ export function BookingFlow() {
 
         {step === 'selectSlot' && (
           <DateSelector
-            selectedDate={context.selectedDate ? new Date(context.selectedDate) : undefined}
+            selectedDate={context.selectedDate}
             onDateSelect={date =>
               send({
                 type: 'SELECT_SLOT',
-                date: date?.toISOString() ?? '',
+                date: date ?? '',
               })
             }
+            serviceId={context.serviceId ?? ''}
           />
         )}
 
