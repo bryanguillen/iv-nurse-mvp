@@ -44,7 +44,7 @@ export function BookingFlow() {
         {step === 'selectService' && (
           <div className="space-y-2">
             <Select
-              value={context.serviceId}
+              value={context.serviceId ?? ''}
               onValueChange={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
             >
               <SelectTrigger className="w-full truncate">
