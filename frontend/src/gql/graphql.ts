@@ -15,6 +15,14 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
 };
 
+export type AvailableSlotsDto = {
+  __typename?: 'AvailableSlotsDto';
+  endTime: Scalars['DateTime']['output'];
+  nurseId: Scalars['String']['output'];
+  serviceId: Scalars['String']['output'];
+  startTime: Scalars['DateTime']['output'];
+};
+
 export type BookingDto = {
   __typename?: 'BookingDto';
   createdAt: Scalars['DateTime']['output'];
@@ -206,6 +214,7 @@ export type PersonUuidDto = {
 export type Query = {
   __typename?: 'Query';
   getAvailabilityByNurseId: Array<NurseAvailabilityDto>;
+  getAvailableSlots: Array<AvailableSlotsDto>;
   getBookings: Array<BookingDto>;
   getNurseById?: Maybe<NurseUuid>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
@@ -216,6 +225,11 @@ export type Query = {
 
 export type QueryGetAvailabilityByNurseIdArgs = {
   nurseId: Scalars['String']['input'];
+};
+
+
+export type QueryGetAvailableSlotsArgs = {
+  input: SlotFinderInput;
 };
 
 
@@ -236,6 +250,13 @@ export type QueryGetNurseServicesByNurseIdArgs = {
 
 export type QueryGetOrganizationRecordArgs = {
   id: Scalars['String']['input'];
+};
+
+export type SlotFinderInput = {
+  end?: InputMaybe<Scalars['String']['input']>;
+  nurseId: Scalars['String']['input'];
+  serviceId: Scalars['String']['input'];
+  start: Scalars['String']['input'];
 };
 
 export type UpdateBookingInput = {
