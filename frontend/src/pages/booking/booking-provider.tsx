@@ -14,6 +14,7 @@ interface BookingDataContextType {
   };
   nurse: {
     id: string;
+    timezone: string;
     services: {
       id: string;
       name: string;
@@ -82,6 +83,7 @@ export function BookingProvider() {
         },
         nurse: {
           id: data.getNurseById.id,
+          timezone: data.getNurseById.timezone,
           services: data.getNurseById.services.map(service => ({
             id: service.id,
             name: service.name,
