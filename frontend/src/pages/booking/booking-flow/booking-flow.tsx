@@ -13,13 +13,18 @@ export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
   const step = state.value;
   const context = state.context;
-  const userInfo = context.userInfo ?? {
+  const userInfo: BookingUserInfo = context.userInfo ?? {
     firstName: '',
     phone: '',
     streetAddress: '',
     city: '',
     state: '',
     zip: '',
+  };
+
+  const handleSubmit = async () => {
+    const patientId = await createPatientInSupabase(userInfo);
+    console.log('patientId', patientId);
   };
 
   const handleUserInfoChange = (field: keyof BookingUserInfo, value: string) => {
@@ -111,7 +116,7 @@ export function BookingFlow() {
         )}
         {step === 'review' && (
           <Button
-            onClick={() => console.log('context', context)}
+            onClick={() => handleSubmit()}
             className="flex-1 py-3"
             disabled={!context.confirmed}
           >
@@ -121,4 +126,32 @@ export function BookingFlow() {
       </div>
     </div>
   );
+}
+
+async function createPatientInSupabase(userInfo: BookingUserInfo) {
+  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-patient`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+    },
+    body: JSON.stringify({
+      firstName: userInfo.firstName,
+      phone: userInfo.phone,
+      address: {
+        line1: userInfo.streetAddress,
+        city: userInfo.city,
+        state: userInfo.state,
+        postal_code: userInfo.zip,
+      },
+    }),
+  });
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to create patient');
+  }
+
+  return result.patientId;
 }
