@@ -129,23 +129,26 @@ export function BookingFlow() {
 }
 
 async function createPatientInSupabase(userInfo: BookingUserInfo) {
-  const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/create-patient`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-    },
-    body: JSON.stringify({
-      firstName: userInfo.firstName,
-      phone: userInfo.phone,
-      address: {
-        line1: userInfo.streetAddress,
-        city: userInfo.city,
-        state: userInfo.state,
-        postal_code: userInfo.zip,
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/functions/v1/create-patient`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
       },
-    }),
-  });
+      body: JSON.stringify({
+        firstName: userInfo.firstName,
+        phone: userInfo.phone,
+        address: {
+          line1: userInfo.streetAddress,
+          city: userInfo.city,
+          state: userInfo.state,
+          postal_code: userInfo.zip,
+        },
+      }),
+    }
+  );
 
   const result = await response.json();
 
