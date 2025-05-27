@@ -2,6 +2,7 @@ import { useMachine } from '@xstate/react';
 import type { BookingUserInfo } from './booking-machine';
 
 import { Button } from '@/components';
+import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
 
 import { bookingMachine } from './booking-machine';
 import { ServiceSelector } from './service-selector';
@@ -22,9 +23,23 @@ export function BookingFlow() {
     zip: '',
   };
 
+  const [createPersonUuid, { loading: createPersonUuidLoading }] = useCreatePersonUuidMutation();
+
   const handleSubmit = async () => {
-    const patientId = await createPatientInSupabase(userInfo);
-    console.log('patientId', patientId);
+    const result = await createPatientInSupabase(userInfo);
+    let personUuid = '';
+
+    if (result.newUser) {
+      const { data } = await createPersonUuid({
+        variables: {
+          supabaseId: result.patientId,
+        },
+      });
+
+      if (data?.createPersonUuid) {
+        personUuid = data.createPersonUuid.id;
+      }
+    }
   };
 
   const handleUserInfoChange = (field: keyof BookingUserInfo, value: string) => {
