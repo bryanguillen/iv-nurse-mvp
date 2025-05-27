@@ -1,7 +1,9 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { plainToInstance } from 'class-transformer';
 import { PersonUuidService } from './person-uuid.service';
 import { PersonUuidDto } from './dto/person-uuid.dto';
 import { CreatePersonUuidInput } from './dto/create-person-uuid.input';
+import { Public } from '../auth/supabase-auth.guard';
 
 @Resolver(() => PersonUuidDto)
 export class PersonUuidResolver {
@@ -11,6 +13,16 @@ export class PersonUuidResolver {
   async createPersonUuid(
     @Args('input') input: CreatePersonUuidInput,
   ): Promise<PersonUuidDto> {
-    return await this.service.create(input);
+    const personUuid = await this.service.create(input);
+    return plainToInstance(PersonUuidDto, personUuid);
+  }
+
+  @Public()
+  @Query(() => PersonUuidDto, { nullable: true })
+  async getPersonBySupabaseId(
+    @Args('supabaseId') supabaseId: string,
+  ): Promise<PersonUuidDto | null> {
+    const personUuid = await this.service.getBySupabaseId(supabaseId);
+    return personUuid ? plainToInstance(PersonUuidDto, personUuid) : null;
   }
 }

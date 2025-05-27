@@ -15,4 +15,11 @@ export class PersonUuidService {
     const record = this.repo.create(input);
     return this.repo.save(record);
   }
+
+  async getBySupabaseId(supabaseId: string): Promise<PersonUuidEntity | null> {
+    return this.repo.findOne({
+      where: { supabaseId },
+      relations: ['bookings'],
+    });
+  }
 }
