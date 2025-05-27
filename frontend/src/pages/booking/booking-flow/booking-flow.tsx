@@ -130,12 +130,11 @@ export function BookingFlow() {
 
 async function createPatientInSupabase(userInfo: BookingUserInfo) {
   const response = await fetch(
-    `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/functions/v1/create-patient`,
+    `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/v1/create-patient`,
     {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
       },
       body: JSON.stringify({
         firstName: userInfo.firstName,
