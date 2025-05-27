@@ -24,7 +24,8 @@ export const bookingMachine = createMachine({
       | { type: 'UPDATE_USER'; userInfo: BookingUserInfo }
       | { type: 'CONFIRM'; confirmed: boolean }
       | { type: 'NEXT' }
-      | { type: 'BACK' },
+      | { type: 'BACK' }
+      | { type: 'SUCCESS' },
   },
 
   id: 'booking',
@@ -87,7 +88,13 @@ export const bookingMachine = createMachine({
           })),
         },
         BACK: 'userInfo',
+        SUCCESS: {
+          target: 'success',
+        },
       },
+    },
+    success: {
+      type: 'final',
     },
   },
 });

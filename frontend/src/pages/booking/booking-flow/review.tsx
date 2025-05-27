@@ -13,14 +13,24 @@ interface ReviewProps {
   userInfo: BookingUserInfo;
   confirmed: boolean;
   onConfirm: (confirmed: boolean) => void;
+  bookingId: string | null; // If null, we're in the review step
 }
 
-export function Review({ serviceId, selectedDate, userInfo, confirmed, onConfirm }: ReviewProps) {
+// HACK - Technically used for the success step; refactor when time
+export function Review({
+  serviceId,
+  selectedDate,
+  userInfo,
+  confirmed,
+  onConfirm,
+  bookingId,
+}: ReviewProps) {
   const { nurse } = useBooking();
 
   const serviceName = nurse?.services.find(service => service.id === serviceId)?.name ?? '';
 
   const details = [
+    ...(bookingId ? [{ label: 'Confirmation Code', value: bookingId }] : []),
     { label: 'Service', value: serviceName },
     {
       label: 'Date',
@@ -35,6 +45,12 @@ export function Review({ serviceId, selectedDate, userInfo, confirmed, onConfirm
 
   return (
     <div className="space-y-4">
+      {bookingId && (
+        <p>
+          Booking confirmed! You'll receive a text with your appointment details. Save this
+          confirmation code for your records.
+        </p>
+      )}
       <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
         <div className="flex items-center gap-2 mb-4">
           <CalendarIcon className="size-5 text-primary" />
@@ -48,14 +64,16 @@ export function Review({ serviceId, selectedDate, userInfo, confirmed, onConfirm
         </div>
       </div>
 
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="confirm"
-          checked={confirmed}
-          onCheckedChange={checked => onConfirm(checked === true)}
-        />
-        <Label htmlFor="confirm">I confirm that all the information above is correct</Label>
-      </div>
+      {!bookingId && (
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="confirm"
+            checked={confirmed}
+            onCheckedChange={checked => onConfirm(checked === true)}
+          />
+          <Label htmlFor="confirm">I confirm that all the information above is correct</Label>
+        </div>
+      )}
     </div>
   );
 }
@@ -68,8 +86,8 @@ interface DetailRowProps {
 function DetailRow({ label, value }: DetailRowProps) {
   return (
     <div className="flex justify-between">
-      <span className="text-muted">{label}</span>
-      <span className="font-medium">{value}</span>
+      <span className="text-muted text-sm">{label}</span>
+      <span className="font-medium text-sm">{value}</span>
     </div>
   );
 }

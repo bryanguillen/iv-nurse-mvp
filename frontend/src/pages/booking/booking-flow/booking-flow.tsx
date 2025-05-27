@@ -27,6 +27,7 @@ export function BookingFlow() {
     zip: '',
   };
 
+  const [createBookingResult, setCreateBookingResult] = useState<string | null>(null);
   const [creatingPersonInSupabase, setCreatingPersonInSupabase] = useState<boolean>(false);
 
   const [createPersonUuid, { loading: createPersonUuidLoading }] = useCreatePersonUuidMutation();
@@ -85,7 +86,8 @@ export function BookingFlow() {
       },
     });
 
-    console.log('successfully created booking', data);
+    setCreateBookingResult(data?.createBooking?.id ?? null);
+    send({ type: 'SUCCESS' });
   };
 
   const handleUserInfoChange = (field: keyof BookingUserInfo, value: string) => {
@@ -112,6 +114,8 @@ export function BookingFlow() {
         return 'Your Info';
       case 'review':
         return 'Review & Submit';
+      case 'success':
+        return 'Success!';
       default:
         return '';
     }
@@ -148,48 +152,51 @@ export function BookingFlow() {
           <UserInfoForm userInfo={userInfo} onChange={handleUserInfoChange} />
         )}
 
-        {step === 'review' && (
+        {(step === 'review' || step === 'success') && (
           <Review
             serviceId={context.serviceId ?? ''}
             selectedDate={context.selectedDate ?? ''}
             userInfo={userInfo}
             confirmed={context.confirmed ?? false}
             onConfirm={handleConfirm}
+            bookingId={createBookingResult}
           />
         )}
       </div>
 
       {/* Footer */}
-      <div className="py-2 flex gap-2">
-        {step !== 'selectService' && (
-          <Button
-            onClick={() => send({ type: 'BACK' })}
-            className="flex-1 py-3"
-            variant="outline"
-            disabled={submissionInProgress}
-          >
-            Back
-          </Button>
-        )}
-        {step !== 'review' && (
-          <Button
-            onClick={() => send({ type: 'NEXT' })}
-            className="flex-1 py-3"
-            disabled={!state.can({ type: 'NEXT' })}
-          >
-            Next
-          </Button>
-        )}
-        {step === 'review' && (
-          <Button
-            onClick={() => handleSubmit()}
-            className="flex-1 py-3"
-            disabled={!context.confirmed || submissionInProgress}
-          >
-            Submit
-          </Button>
-        )}
-      </div>
+      {step !== 'success' && (
+        <div className="py-2 flex gap-2">
+          {step !== 'selectService' && (
+            <Button
+              onClick={() => send({ type: 'BACK' })}
+              className="flex-1 py-3"
+              variant="outline"
+              disabled={submissionInProgress}
+            >
+              Back
+            </Button>
+          )}
+          {step !== 'review' && (
+            <Button
+              onClick={() => send({ type: 'NEXT' })}
+              className="flex-1 py-3"
+              disabled={!state.can({ type: 'NEXT' })}
+            >
+              Next
+            </Button>
+          )}
+          {step === 'review' && (
+            <Button
+              onClick={() => handleSubmit()}
+              className="flex-1 py-3"
+              disabled={!context.confirmed || submissionInProgress}
+            >
+              Submit
+            </Button>
+          )}
+        </div>
+      )}
     </div>
   );
 }
