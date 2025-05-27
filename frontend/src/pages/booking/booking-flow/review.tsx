@@ -1,4 +1,4 @@
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon, CheckCircle2 } from 'lucide-react';
 
 import { formatInTimeZone } from 'date-fns-tz';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -46,10 +46,13 @@ export function Review({
   return (
     <div className="space-y-4">
       {bookingId && (
-        <p>
-          Booking confirmed! You'll receive a text with your appointment details. Save this
-          confirmation code for your records.
-        </p>
+        <div className="flex items-center gap-2 text-green-600">
+          <CheckCircle2 className="size-5" />
+          <p>
+            Booking confirmed! You'll receive a text with your appointment details. Save this
+            confirmation code for your records.
+          </p>
+        </div>
       )}
       <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
         <div className="flex items-center gap-2 mb-4">
