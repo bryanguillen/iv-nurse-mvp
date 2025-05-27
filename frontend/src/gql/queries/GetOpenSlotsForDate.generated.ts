@@ -224,6 +224,7 @@ export type Query = {
   getNurseById?: Maybe<NurseUuid>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
   getOrganizationRecord: OrganizationUuid;
+  getPersonBySupabaseId?: Maybe<PersonUuidDto>;
   getSelfAsNurse?: Maybe<NurseUuid>;
 };
 
@@ -255,6 +256,11 @@ export type QueryGetNurseServicesByNurseIdArgs = {
 
 export type QueryGetOrganizationRecordArgs = {
   id: Scalars['String']['input'];
+};
+
+
+export type QueryGetPersonBySupabaseIdArgs = {
+  supabaseId: Scalars['String']['input'];
 };
 
 export type SlotFinderInput = {

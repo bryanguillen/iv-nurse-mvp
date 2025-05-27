@@ -1,0 +1,6 @@
+query GetPersonBySupabaseId($supabaseId: String!) {
+  getPersonBySupabaseId(supabaseId: $supabaseId) {
+    id
+    supabaseId
+  }
+} 

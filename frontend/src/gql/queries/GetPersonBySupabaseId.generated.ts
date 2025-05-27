@@ -276,64 +276,52 @@ export type UpdateBookingInput = {
   newStartTime: Scalars['DateTime']['input'];
 };
 
-export type GetNurseDataForBookingFlowQueryVariables = Types.Exact<{
-  nurseId: Types.Scalars['String']['input'];
+export type GetPersonBySupabaseIdQueryVariables = Types.Exact<{
+  supabaseId: Types.Scalars['String']['input'];
 }>;
 
 
-export type GetNurseDataForBookingFlowQuery = { __typename?: 'Query', getNurseById?: { __typename?: 'NurseUuid', id: string, timezone: string, services: Array<{ __typename?: 'NurseServiceDto', id: string, name: string, description?: string | null, price?: number | null, durationMinutes: number, topPick?: boolean | null }>, organization: { __typename?: 'OrganizationUuid', id: string, supabaseOrgId: string } } | null };
+export type GetPersonBySupabaseIdQuery = { __typename?: 'Query', getPersonBySupabaseId?: { __typename?: 'PersonUuidDto', id: string, supabaseId: string } | null };
 
 
-export const GetNurseDataForBookingFlowDocument = gql`
-    query GetNurseDataForBookingFlow($nurseId: String!) {
-  getNurseById(id: $nurseId) {
+export const GetPersonBySupabaseIdDocument = gql`
+    query GetPersonBySupabaseId($supabaseId: String!) {
+  getPersonBySupabaseId(supabaseId: $supabaseId) {
     id
-    timezone
-    services {
-      id
-      name
-      description
-      price
-      durationMinutes
-      topPick
-    }
-    organization {
-      id
-      supabaseOrgId
-    }
+    supabaseId
   }
 }
     `;
 
 /**
- * __useGetNurseDataForBookingFlowQuery__
+ * __useGetPersonBySupabaseIdQuery__
  *
- * To run a query within a React component, call `useGetNurseDataForBookingFlowQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetNurseDataForBookingFlowQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetPersonBySupabaseIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPersonBySupabaseIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetNurseDataForBookingFlowQuery({
+ * const { data, loading, error } = useGetPersonBySupabaseIdQuery({
  *   variables: {
- *      nurseId: // value for 'nurseId'
+ *      supabaseId: // value for 'supabaseId'
  *   },
  * });
  */
-export function useGetNurseDataForBookingFlowQuery(baseOptions: Apollo.QueryHookOptions<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables> & ({ variables: GetNurseDataForBookingFlowQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
+export function useGetPersonBySupabaseIdQuery(baseOptions: Apollo.QueryHookOptions<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables> & ({ variables: GetPersonBySupabaseIdQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>(GetNurseDataForBookingFlowDocument, options);
+        return Apollo.useQuery<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>(GetPersonBySupabaseIdDocument, options);
       }
-export function useGetNurseDataForBookingFlowLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>) {
+export function useGetPersonBySupabaseIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>(GetNurseDataForBookingFlowDocument, options);
+          return Apollo.useLazyQuery<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>(GetPersonBySupabaseIdDocument, options);
         }
-export function useGetNurseDataForBookingFlowSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>) {
+export function useGetPersonBySupabaseIdSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>(GetNurseDataForBookingFlowDocument, options);
+          return Apollo.useSuspenseQuery<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>(GetPersonBySupabaseIdDocument, options);
         }
-export type GetNurseDataForBookingFlowQueryHookResult = ReturnType<typeof useGetNurseDataForBookingFlowQuery>;
-export type GetNurseDataForBookingFlowLazyQueryHookResult = ReturnType<typeof useGetNurseDataForBookingFlowLazyQuery>;
-export type GetNurseDataForBookingFlowSuspenseQueryHookResult = ReturnType<typeof useGetNurseDataForBookingFlowSuspenseQuery>;
-export type GetNurseDataForBookingFlowQueryResult = Apollo.QueryResult<GetNurseDataForBookingFlowQuery, GetNurseDataForBookingFlowQueryVariables>;
+export type GetPersonBySupabaseIdQueryHookResult = ReturnType<typeof useGetPersonBySupabaseIdQuery>;
+export type GetPersonBySupabaseIdLazyQueryHookResult = ReturnType<typeof useGetPersonBySupabaseIdLazyQuery>;
+export type GetPersonBySupabaseIdSuspenseQueryHookResult = ReturnType<typeof useGetPersonBySupabaseIdSuspenseQuery>;
+export type GetPersonBySupabaseIdQueryResult = Apollo.QueryResult<GetPersonBySupabaseIdQuery, GetPersonBySupabaseIdQueryVariables>;
