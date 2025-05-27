@@ -9,6 +9,7 @@ import { Public } from '../auth/supabase-auth.guard';
 export class PersonUuidResolver {
   constructor(private service: PersonUuidService) {}
 
+  @Public()
   @Mutation(() => PersonUuidDto)
   async createPersonUuid(
     @Args('input') input: CreatePersonUuidInput,
