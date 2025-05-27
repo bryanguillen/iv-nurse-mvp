@@ -47,7 +47,7 @@ export function Review({
     <div className="space-y-4">
       {bookingId && (
         <div className="flex items-center gap-2 text-green-600">
-          <CheckCircle2 className="size-5" />
+          <CheckCircle2 className="size-5 flex-shrink-0" />
           <p>
             Booking confirmed! You'll receive a text with your appointment details. Save this
             confirmation code for your records.
