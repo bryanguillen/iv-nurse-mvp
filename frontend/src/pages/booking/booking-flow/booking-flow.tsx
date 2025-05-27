@@ -1,9 +1,13 @@
+import { useState } from 'react';
 import { useMachine } from '@xstate/react';
-import type { BookingUserInfo } from './booking-machine';
+import { useParams } from 'react-router-dom';
 
 import { Button } from '@/components';
 import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
+import { useGetPersonBySupabaseIdLazyQuery } from '@/gql/queries/GetPersonBySupabaseId.generated';
+import { useCreateBookingMutation } from '@/gql/mutations/CreateBooking.generated';
 
+import type { BookingUserInfo } from './booking-machine';
 import { bookingMachine } from './booking-machine';
 import { ServiceSelector } from './service-selector';
 import { DateSelector } from './date-selector';
@@ -23,11 +27,28 @@ export function BookingFlow() {
     zip: '',
   };
 
+  const [creatingPersonInSupabase, setCreatingPersonInSupabase] = useState<boolean>(false);
+
   const [createPersonUuid, { loading: createPersonUuidLoading }] = useCreatePersonUuidMutation();
+  const [getPersonBySupabaseId, { loading: getPersonBySupabaseIdLoading }] =
+    useGetPersonBySupabaseIdLazyQuery();
+  const [createBooking, { loading: createBookingLoading }] = useCreateBookingMutation();
+
+  const { nurseId } = useParams<{ nurseId: string }>();
+
+  const submissionInProgress =
+    creatingPersonInSupabase ||
+    createPersonUuidLoading ||
+    getPersonBySupabaseIdLoading ||
+    createBookingLoading;
 
   const handleSubmit = async () => {
+    setCreatingPersonInSupabase(true);
+
     const result = await createPatientInSupabase(userInfo);
     let personUuid = '';
+
+    setCreatingPersonInSupabase(false);
 
     if (result.newUser) {
       const { data } = await createPersonUuid({
@@ -39,7 +60,32 @@ export function BookingFlow() {
       if (data?.createPersonUuid) {
         personUuid = data.createPersonUuid.id;
       }
+    } else {
+      const { data } = await getPersonBySupabaseId({
+        variables: {
+          supabaseId: result.patientId,
+        },
+      });
+
+      if (data?.getPersonBySupabaseId) {
+        personUuid = data.getPersonBySupabaseId.id;
+      }
     }
+
+    const { data } = await createBooking({
+      variables: {
+        input: {
+          nurseId: nurseId ?? '',
+          personId: personUuid,
+          serviceId: context.serviceId ?? '',
+          startTime: context.selectedDate ?? '',
+          endTime: context.selectedDate ?? '',
+          notes: userInfo.notes ?? '',
+        },
+      },
+    });
+
+    console.log('successfully created booking', data);
   };
 
   const handleUserInfoChange = (field: keyof BookingUserInfo, value: string) => {
@@ -116,7 +162,12 @@ export function BookingFlow() {
       {/* Footer */}
       <div className="py-2 flex gap-2">
         {step !== 'selectService' && (
-          <Button onClick={() => send({ type: 'BACK' })} className="flex-1 py-3" variant="outline">
+          <Button
+            onClick={() => send({ type: 'BACK' })}
+            className="flex-1 py-3"
+            variant="outline"
+            disabled={submissionInProgress}
+          >
             Back
           </Button>
         )}
@@ -133,7 +184,7 @@ export function BookingFlow() {
           <Button
             onClick={() => handleSubmit()}
             className="flex-1 py-3"
-            disabled={!context.confirmed}
+            disabled={!context.confirmed || submissionInProgress}
           >
             Submit
           </Button>
