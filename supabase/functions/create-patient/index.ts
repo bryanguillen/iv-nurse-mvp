@@ -7,7 +7,7 @@ serve(async (req) => {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        'Access-Control-Allow-Headers': 'Content-Type',
       },
     });
   }
@@ -203,7 +203,10 @@ serve(async (req) => {
         newUser,
         newPatient,
         addressUpdated,
-      })
+      }), {
+        status: 200,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      }
     );
   } catch (err) {
     console.error('Unhandled error:', err);
@@ -213,3 +216,6 @@ serve(async (req) => {
     });
   }
 });
+
+
+// https://vcifnebjqtjggtpoplqx.supabase.co/functions/functions/v1/create-patient
