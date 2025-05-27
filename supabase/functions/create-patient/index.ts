@@ -2,6 +2,16 @@ import { serve } from 'https://deno.land/std@0.177.0/http/server.ts';
 import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
 serve(async (req) => {
+  if (req.method === 'OPTIONS' || req.method === 'POST') {
+    return new Response('ok', {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      },
+    });
+  }
+
   const supabaseClient = createClient(
     Deno.env.get('SUPABASE_URL')!,
     Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
@@ -14,28 +24,37 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'Missing fields' }), { status: 400 });
     }
 
-    // Check if user exists
-    const { data: existingUser } = await supabaseClient.auth.admin.listUsers({
+    // Fetch up to 1000 users (adjust as needed)
+    const { data: userList, error: listError } = await supabaseClient.auth.admin.listUsers({
       page: 1,
-      perPage: 1,
-      phone,
+      perPage: 1000,
     });
 
-    let userId = existingUser?.users?.[0]?.id;
+    if (listError) {
+      console.error('Error listing users:', listError);
+      return new Response(JSON.stringify({ error: 'User lookup failed' }), { status: 500 });
+    }
 
-    // Create user if not exists
-    if (!userId) {
-      const { data: newUser, error: userError } =
-        await supabaseClient.auth.admin.createUser({
-          phone,
-        });
+    // Find matching user by phone
+    const matchingUser = userList.users.find(user => user.phone === phone);
+
+    let userId = matchingUser?.id;
+
+    if (userId) {
+      console.log(`User with phone ${phone} already exists, id: ${userId}`);
+    } else {
+      // Create new user if not found
+      const { data: newUser, error: userError } = await supabaseClient.auth.admin.createUser({
+        phone,
+      });
 
       if (userError || !newUser) {
         console.error('Error creating user:', userError);
         return new Response(JSON.stringify({ error: 'User creation failed' }), { status: 500 });
       }
 
-      userId = newUser.id;
+      userId = newUser.user?.id ?? '';
+      console.log(`Created new user with id: ${userId}`);
     }
 
     // Insert address
@@ -67,7 +86,7 @@ serve(async (req) => {
       return new Response(JSON.stringify({ error: 'Patient creation failed' }), { status: 500 });
     }
 
-    return new Response(JSON.stringify({ patientId: userId }), { status: 200 });
+    return new Response(JSON.stringify({ patientId: userId, newUser: !matchingUser }), { status: 200 });
   } catch (err) {
     console.error('Unhandled error:', err);
     return new Response(JSON.stringify({ error: 'Unexpected server error' }), { status: 500 });
