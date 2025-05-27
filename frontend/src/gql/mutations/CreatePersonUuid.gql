@@ -1,0 +1,5 @@
+mutation CreatePersonUuid($supabaseId: String!) {
+    createPersonUuid(input: { supabaseId: $supabaseId }) {
+        id
+    }
+}
