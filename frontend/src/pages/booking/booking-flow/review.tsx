@@ -55,7 +55,7 @@ export function Review({
         </div>
       )}
       <div className="container mx-auto p-4 bg-white rounded-lg shadow-md">
-        <div className="flex items-center gap-2 mb-4">
+        <div className="flex items-center gap-2 mb-4 justify-center">
           <CalendarIcon className="size-5 text-primary" />
           <h2 className="text-lg font-semibold">Appointment Details</h2>
         </div>
