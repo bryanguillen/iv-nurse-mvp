@@ -155,5 +155,5 @@ async function createPatientInSupabase(userInfo: BookingUserInfo) {
     throw new Error(result.error || 'Failed to create patient');
   }
 
-  return result.patientId;
+  return result;
 }
