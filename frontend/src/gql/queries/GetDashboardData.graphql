@@ -1,5 +1,5 @@
-query GetDashboardData($input: GetAppointmentsInput!) {
-  getBookings(input: $input) {
+query GetDashboardData($bookingsInput: GetAppointmentsInput!, $nurseIdForStats: String!) {
+  getBookings(input: $bookingsInput) {
     id
     personId
     startTime
@@ -7,5 +7,13 @@ query GetDashboardData($input: GetAppointmentsInput!) {
       id
       name
     }
+  }
+  getNurseStats(nurseId: $nurseIdForStats) {
+    id
+    totalRevenue
+    rebookingsCount
+    rebookingsRevenue
+    newCustomersCount
+    newCustomersRevenue
   }
 } 
