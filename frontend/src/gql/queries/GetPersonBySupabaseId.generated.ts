@@ -36,7 +36,7 @@ export type BookingDto = {
   notes?: Maybe<Scalars['String']['output']>;
   nurseId: Scalars['String']['output'];
   personId: Scalars['String']['output'];
-  serviceId: Scalars['String']['output'];
+  service: NurseServiceDto;
   startTime: Scalars['DateTime']['output'];
   status: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
