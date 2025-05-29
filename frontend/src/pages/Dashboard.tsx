@@ -4,7 +4,7 @@ import { Beaker, DollarSign, Repeat, UserPlus } from 'lucide-react';
 
 import { useGetDashboardDataQuery } from '@/gql/queries/GetDashboardData.generated';
 import { useAuth } from '@/context/AuthContext';
-import { Spinner, PageContainer, ContentContainer, Button } from '@/components';
+import { Spinner, PageContainer, ContentContainer, Button, BookingCard } from '@/components';
 import { convertUuidToShort } from '@/utils';
 
 export default function Dashboard() {
@@ -79,30 +79,11 @@ export default function Dashboard() {
       ) : (
         <div className="space-y-4">
           {bookings.map(booking => (
-            <ContentContainer key={booking.id} className="flex flex-col gap-2">
-              {/* First row: Time and Client ID */}
-              <div className="flex justify-between items-center">
-                <span className="font-medium">
-                  {formatInTimeZone(
-                    booking.startTime,
-                    user?.timezone ?? 'America/New_York',
-                    'h:mm a'
-                  )}
-                </span>
-                <span className="text-sm text-muted">
-                  Client #{convertUuidToShort(booking.personId)}
-                </span>
-              </div>
-
-              {/* Second row: Service and View Details */}
-              <div className="flex justify-between items-center">
-                <div className="flex items-center gap-2">
-                  <Beaker className="size-4 text-primary" />
-                  <span className="text-sm text-muted">{booking.service.name}</span>
-                </div>
-                <Button size="sm">View Details</Button>
-              </div>
-            </ContentContainer>
+            <BookingCard
+              key={booking.id}
+              booking={booking}
+              timezone={user?.timezone ?? 'America/New_York'}
+            />
           ))}
         </div>
       )}
