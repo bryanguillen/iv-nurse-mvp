@@ -36,7 +36,7 @@ export type BookingDto = {
   notes?: Maybe<Scalars['String']['output']>;
   nurseId: Scalars['String']['output'];
   personId: Scalars['String']['output'];
-  serviceId: Scalars['String']['output'];
+  service: NurseServiceDto;
   startTime: Scalars['DateTime']['output'];
   status: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -281,7 +281,7 @@ export type GetDashboardDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetDashboardDataQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, personId: string, startTime: any }> };
+export type GetDashboardDataQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, personId: string, startTime: any, service: { __typename?: 'NurseServiceDto', id: string, name: string } }> };
 
 
 export const GetDashboardDataDocument = gql`
@@ -290,6 +290,10 @@ export const GetDashboardDataDocument = gql`
     id
     personId
     startTime
+    service {
+      id
+      name
+    }
   }
 }
     `;

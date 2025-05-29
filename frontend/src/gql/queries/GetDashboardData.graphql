@@ -3,5 +3,9 @@ query GetDashboardData($input: GetAppointmentsInput!) {
     id
     personId
     startTime
+    service {
+      id
+      name
+    }
   }
 } 
