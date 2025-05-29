@@ -1,4 +1,4 @@
-import { Home, Settings, LogOut } from 'lucide-react';
+import { Home, Settings, LogOut, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { supabase } from '@/config/supabase';
 
@@ -19,6 +19,11 @@ const items = [
     title: 'Home',
     url: '/',
     icon: Home,
+  },
+  {
+    title: 'Bookings',
+    url: '/bookings',
+    icon: Calendar,
   },
   {
     title: 'Settings',
