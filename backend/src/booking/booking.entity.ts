@@ -50,6 +50,9 @@ export class BookingEntity {
   @Column({ default: 'booked' })
   status: string;
 
+  @Column({ name: 'is_rebooking', default: false })
+  isRebooking: boolean;
+
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
 

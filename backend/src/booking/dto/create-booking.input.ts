@@ -19,4 +19,7 @@ export class CreateBookingInput {
 
   @Field({ nullable: true })
   notes?: string;
+
+  @Field({ defaultValue: false })
+  isRebooking?: boolean;
 }
