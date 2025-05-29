@@ -65,6 +65,15 @@ export type CreateNurseServicesInput = {
   services: Array<NurseServiceSlotInput>;
 };
 
+export type CreateNurseStatsInput = {
+  newCustomersCount: Scalars['Int']['input'];
+  newCustomersRevenue: Scalars['Float']['input'];
+  nurseId: Scalars['String']['input'];
+  rebookingsCount: Scalars['Int']['input'];
+  rebookingsRevenue: Scalars['Float']['input'];
+  totalRevenue: Scalars['Float']['input'];
+};
+
 export type CreateNurseUuidInput = {
   supabaseId: Scalars['String']['input'];
   timezone: Scalars['String']['input'];
@@ -98,12 +107,14 @@ export type Mutation = {
   configureAvailability: Array<NurseAvailabilityDto>;
   configureNurseServices: Array<NurseServiceDto>;
   createBooking: BookingDto;
+  createNurseStats: NurseStatsDto;
   createNurseUuid: NurseUuid;
   createOrganizationRecord: OrganizationUuid;
   createPersonUuid: PersonUuidDto;
   deleteAvailabilityByIds: Scalars['Boolean']['output'];
   deleteNurseServicesByIds: Scalars['Boolean']['output'];
   modifyBooking: BookingDto;
+  updateNurseStats: NurseStatsDto;
 };
 
 
@@ -124,6 +135,11 @@ export type MutationConfigureNurseServicesArgs = {
 
 export type MutationCreateBookingArgs = {
   input: CreateBookingInput;
+};
+
+
+export type MutationCreateNurseStatsArgs = {
+  input: CreateNurseStatsInput;
 };
 
 
@@ -154,6 +170,11 @@ export type MutationDeleteNurseServicesByIdsArgs = {
 
 export type MutationModifyBookingArgs = {
   input: UpdateBookingInput;
+};
+
+
+export type MutationUpdateNurseStatsArgs = {
+  input: UpdateNurseStatsInput;
 };
 
 export type NurseAvailabilityDto = {
@@ -192,6 +213,18 @@ export type NurseServiceSlotInput = {
   topPick?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
+export type NurseStatsDto = {
+  __typename?: 'NurseStatsDto';
+  createdAt: Scalars['DateTime']['output'];
+  id: Scalars['ID']['output'];
+  newCustomersCount: Scalars['Int']['output'];
+  newCustomersRevenue: Scalars['Float']['output'];
+  nurseId: Scalars['String']['output'];
+  rebookingsCount: Scalars['Int']['output'];
+  rebookingsRevenue: Scalars['Float']['output'];
+  totalRevenue: Scalars['Float']['output'];
+};
+
 export type NurseUuid = {
   __typename?: 'NurseUuid';
   createdAt: Scalars['DateTime']['output'];
@@ -223,6 +256,7 @@ export type Query = {
   getBookings: Array<BookingDto>;
   getNurseById?: Maybe<NurseUuid>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
+  getNurseStats: Array<NurseStatsDto>;
   getOrganizationRecord: OrganizationUuid;
   getPersonBySupabaseId?: Maybe<PersonUuidDto>;
   getSelfAsNurse?: Maybe<NurseUuid>;
@@ -254,6 +288,11 @@ export type QueryGetNurseServicesByNurseIdArgs = {
 };
 
 
+export type QueryGetNurseStatsArgs = {
+  nurseId: Scalars['String']['input'];
+};
+
+
 export type QueryGetOrganizationRecordArgs = {
   id: Scalars['String']['input'];
 };
@@ -274,6 +313,15 @@ export type UpdateBookingInput = {
   bookingId: Scalars['String']['input'];
   newEndTime: Scalars['DateTime']['input'];
   newStartTime: Scalars['DateTime']['input'];
+};
+
+export type UpdateNurseStatsInput = {
+  id: Scalars['ID']['input'];
+  newCustomersCount?: InputMaybe<Scalars['Int']['input']>;
+  newCustomersRevenue?: InputMaybe<Scalars['Float']['input']>;
+  rebookingsCount?: InputMaybe<Scalars['Int']['input']>;
+  rebookingsRevenue?: InputMaybe<Scalars['Float']['input']>;
+  totalRevenue?: InputMaybe<Scalars['Float']['input']>;
 };
 
 export type GetPersonBySupabaseIdQueryVariables = Types.Exact<{
