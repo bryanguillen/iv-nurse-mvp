@@ -12,6 +12,7 @@ export * from './ui/select';
 export * from './ui/popover';
 export * from './ui/tooltip';
 export * from './ui/checkbox';
+export * from './ui/content-container';
 
 export * from './app-sidebar';
 export * from './ProtectedLayout';
