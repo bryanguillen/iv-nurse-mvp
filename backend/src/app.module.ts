@@ -12,6 +12,7 @@ import { SupabaseAuthGuard } from './auth/supabase-auth.guard';
 import { NurseServiceModule } from './nurse-service/nurse-service.module';
 import { PersonUuidModule } from './person-uuid/person-uuid.module';
 import { BookingModule } from './booking/booking.module';
+import { NurseStatsModule } from './nurse-stats/nurse-stats.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { BookingModule } from './booking/booking.module';
     NurseServiceModule,
     PersonUuidModule,
     BookingModule,
+    NurseStatsModule,
   ],
   providers: [
     {
