@@ -1,5 +1,6 @@
 import { formatInTimeZone } from 'date-fns-tz';
 import { format as formatDate } from 'date-fns';
+import { Beaker } from 'lucide-react';
 
 import { useGetDashboardDataQuery } from '@/gql/queries/GetDashboardData.generated';
 import { useAuth } from '@/context/AuthContext';
@@ -48,7 +49,10 @@ export default function Dashboard() {
 
               {/* Second row: Service and View Details */}
               <div className="flex justify-between items-center">
-                <span className="text-sm text-muted">{booking.service.name}</span>
+                <div className="flex items-center gap-2">
+                  <Beaker className="size-4 text-primary" />
+                  <span className="text-sm text-muted">{booking.service.name}</span>
+                </div>
                 <Button size="sm">View Details</Button>
               </div>
             </ContentContainer>
