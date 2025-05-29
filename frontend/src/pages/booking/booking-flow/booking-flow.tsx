@@ -20,6 +20,7 @@ export function BookingFlow() {
   const context = state.context;
   const userInfo: BookingUserInfo = context.userInfo ?? {
     firstName: '',
+    lastName: '',
     phone: '',
     streetAddress: '',
     city: '',
@@ -211,6 +212,7 @@ async function createPatientInSupabase(userInfo: BookingUserInfo) {
       },
       body: JSON.stringify({
         firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
         phone: userInfo.phone,
         address: {
           line1: userInfo.streetAddress,

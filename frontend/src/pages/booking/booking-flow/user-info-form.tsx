@@ -21,6 +21,16 @@ export function UserInfoForm({ userInfo, onChange }: UserInfoFormProps) {
       </div>
 
       <div className="space-y-2">
+        <Label htmlFor="lastName">Last Name</Label>
+        <Input
+          id="lastName"
+          value={userInfo.lastName}
+          onChange={e => onChange('lastName', e.target.value)}
+          placeholder="Enter your last name"
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
         <Input
           id="phone"

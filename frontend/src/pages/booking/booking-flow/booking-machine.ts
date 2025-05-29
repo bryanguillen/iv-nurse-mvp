@@ -2,6 +2,7 @@ import { createMachine, assign } from 'xstate';
 
 export interface BookingUserInfo {
   firstName: string;
+  lastName: string;
   phone: string;
   notes?: string;
   streetAddress: string;
@@ -70,6 +71,7 @@ export const bookingMachine = createMachine({
         NEXT: {
           guard: ({ context }) =>
             !!context.userInfo?.firstName &&
+            !!context.userInfo?.lastName &&
             !!context.userInfo?.phone &&
             !!context.userInfo?.streetAddress &&
             !!context.userInfo?.city &&
