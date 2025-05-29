@@ -18,9 +18,9 @@ serve(async (req) => {
   );
 
   try {
-    const { firstName, phone, address } = await req.json();
+    const { firstName, lastName, phone, address } = await req.json();
 
-    if (!firstName || !phone || !address) {
+    if (!firstName || !lastName || !phone || !address) {
       return new Response(JSON.stringify({ error: 'Missing fields' }), {
         status: 400,
         headers: { 'Access-Control-Allow-Origin': '*' },
@@ -104,6 +104,7 @@ serve(async (req) => {
         {
           id: userId,
           first_name: firstName,
+          last_name: lastName,
           phone,
           address_id: addressId,
         },
@@ -216,6 +217,3 @@ serve(async (req) => {
     });
   }
 });
-
-
-// https://vcifnebjqtjggtpoplqx.supabase.co/functions/functions/v1/create-patient
