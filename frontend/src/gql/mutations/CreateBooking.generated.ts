@@ -36,7 +36,7 @@ export type BookingDto = {
   notes?: Maybe<Scalars['String']['output']>;
   nurseId: Scalars['String']['output'];
   personId: Scalars['String']['output'];
-  serviceId: Scalars['String']['output'];
+  service: NurseServiceDto;
   startTime: Scalars['DateTime']['output'];
   status: Scalars['String']['output'];
   updatedAt: Scalars['DateTime']['output'];
@@ -281,7 +281,7 @@ export type CreateBookingMutationVariables = Types.Exact<{
 }>;
 
 
-export type CreateBookingMutation = { __typename?: 'Mutation', createBooking: { __typename?: 'BookingDto', id: string, nurseId: string, personId: string, serviceId: string, startTime: any, endTime: any, notes?: string | null, status: string, createdAt: any, updatedAt: any } };
+export type CreateBookingMutation = { __typename?: 'Mutation', createBooking: { __typename?: 'BookingDto', id: string, nurseId: string, personId: string, startTime: any, endTime: any, notes?: string | null, status: string, createdAt: any, updatedAt: any } };
 
 
 export const CreateBookingDocument = gql`
@@ -290,7 +290,6 @@ export const CreateBookingDocument = gql`
     id
     nurseId
     personId
-    serviceId
     startTime
     endTime
     notes

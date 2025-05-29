@@ -3,7 +3,6 @@ mutation CreateBooking($input: CreateBookingInput!) {
     id
     nurseId
     personId
-    serviceId
     startTime
     endTime
     notes
