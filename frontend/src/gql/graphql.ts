@@ -43,6 +43,7 @@ export type CancelBookingInput = {
 
 export type CreateBookingInput = {
   endTime: Scalars['DateTime']['input'];
+  isRebooking?: Scalars['Boolean']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
   nurseId: Scalars['String']['input'];
   personId: Scalars['String']['input'];
