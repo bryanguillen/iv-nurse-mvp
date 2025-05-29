@@ -1,4 +1,4 @@
-import { format, formatInTimeZone } from 'date-fns-tz';
+import { formatInTimeZone } from 'date-fns-tz';
 import { format as formatDate } from 'date-fns';
 
 import { useGetDashboardDataQuery } from '@/gql/queries/GetDashboardData.generated';
