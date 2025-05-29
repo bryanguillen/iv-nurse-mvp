@@ -1,11 +1,9 @@
-import { formatInTimeZone } from 'date-fns-tz';
 import { format as formatDate } from 'date-fns';
-import { Beaker, DollarSign, Repeat, UserPlus } from 'lucide-react';
+import { DollarSign, Repeat, UserPlus } from 'lucide-react';
 
 import { useGetDashboardDataQuery } from '@/gql/queries/GetDashboardData.generated';
 import { useAuth } from '@/context/AuthContext';
-import { Spinner, PageContainer, ContentContainer, Button, BookingCard } from '@/components';
-import { convertUuidToShort } from '@/utils';
+import { Spinner, PageContainer, ContentContainer, BookingCard } from '@/components';
 
 export default function Dashboard() {
   const { user } = useAuth();
