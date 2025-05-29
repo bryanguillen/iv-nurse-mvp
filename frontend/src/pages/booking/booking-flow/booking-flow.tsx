@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMachine } from '@xstate/react';
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 
 import { Button } from '@/components';
 import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
@@ -18,6 +18,8 @@ export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
   const step = state.value;
   const context = state.context;
+  const [searchParams] = useSearchParams();
+  const isRebooking = searchParams.get('rebooking') === 'true';
   const userInfo: BookingUserInfo = context.userInfo ?? {
     firstName: '',
     lastName: '',
@@ -83,6 +85,7 @@ export function BookingFlow() {
           startTime: context.selectedDate ?? '',
           endTime: context.selectedDate ?? '',
           notes: userInfo.notes ?? '',
+          isRebooking,
         },
       },
     });
