@@ -1,0 +1,11 @@
+query GetBookings($input: GetAppointmentsInput!) {
+  getBookings(input: $input) {
+    id
+    personId
+    startTime
+    service {
+      id
+      name
+    }
+  }
+}
