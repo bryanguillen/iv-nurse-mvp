@@ -1,5 +1,6 @@
 query GetSelfAsNurse {
   getSelfAsNurse {
     id
+    timezone
   }
 }

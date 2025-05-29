@@ -279,13 +279,14 @@ export type UpdateBookingInput = {
 export type GetSelfAsNurseQueryVariables = Types.Exact<{ [key: string]: never; }>;
 
 
-export type GetSelfAsNurseQuery = { __typename?: 'Query', getSelfAsNurse?: { __typename?: 'NurseUuid', id: string } | null };
+export type GetSelfAsNurseQuery = { __typename?: 'Query', getSelfAsNurse?: { __typename?: 'NurseUuid', id: string, timezone: string } | null };
 
 
 export const GetSelfAsNurseDocument = gql`
     query GetSelfAsNurse {
   getSelfAsNurse {
     id
+    timezone
   }
 }
     `;
