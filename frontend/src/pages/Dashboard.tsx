@@ -74,7 +74,6 @@ export default function Dashboard() {
       </div>
 
       <h2 className="text-xl font-semibold mb-6">Today's Appointments</h2>
-
       {bookings.length === 0 ? (
         <p className="text-muted">No appointments scheduled for today.</p>
       ) : (
