@@ -1,0 +1,7 @@
+query GetDashboardData($input: GetAppointmentsInput!) {
+  getBookings(input: $input) {
+    id
+    personId
+    startTime
+  }
+} 
