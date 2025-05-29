@@ -40,6 +40,7 @@ export class BookingService {
 
     const query = this.repo
       .createQueryBuilder('booking')
+      .leftJoinAndSelect('booking.service', 'service')
       .where('booking.nurseId = :nurseId', { nurseId });
 
     if (!end) {
