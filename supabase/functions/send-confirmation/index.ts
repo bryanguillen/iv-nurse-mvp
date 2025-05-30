@@ -14,13 +14,19 @@ serve(async (req) => {
     }
 
     if (req.method !== 'POST') {
-      return new Response(JSON.stringify({ error: 'Method not allowed' }), { status: 405 });
+      return new Response(JSON.stringify({ error: 'Method not allowed' }), { 
+        status: 405,
+        headers: { 'Access-Control-Allow-Origin': '*' }
+      });
     }
 
     const { id, bookingCode } = await req.json();
 
     if (!id || !bookingCode) {
-      return new Response(JSON.stringify({ error: 'Missing id or code' }), { status: 400 });
+      return new Response(JSON.stringify({ error: 'Missing id or code' }), { 
+        status: 400,
+        headers: { 'Access-Control-Allow-Origin': '*' }
+      });
     }
 
     // Initialize Supabase client
@@ -39,7 +45,10 @@ serve(async (req) => {
     if (dbError || !patient) {
       console.log('patient', patient);
       console.log('dbError', dbError);
-      return new Response(JSON.stringify({ error: 'Patient not found' }), { status: 404 });
+      return new Response(JSON.stringify({ error: 'Patient not found' }), { 
+        status: 404,
+        headers: { 'Access-Control-Allow-Origin': '*' }
+      });
     }
 
     const phoneNumber = patient.phone;
@@ -72,15 +81,24 @@ serve(async (req) => {
     if (!response.ok) {
       const errorBody = await response.text();
       console.error('Twilio API error:', errorBody);
-      return new Response(JSON.stringify({ error: 'Failed to send SMS' }), { status: 500 });
+      return new Response(JSON.stringify({ error: 'Failed to send SMS' }), { 
+        status: 500,
+        headers: { 'Access-Control-Allow-Origin': '*' }
+      });
     }
 
     const responseData = await response.json();
     console.log('Twilio API response:', responseData);
 
-    return new Response(JSON.stringify({ success: true }), { status: 200 });
+    return new Response(JSON.stringify({ success: true }), { 
+      status: 200,
+      headers: { 'Access-Control-Allow-Origin': '*' }
+    });
   } catch (error) {
     console.error('Unexpected error:', error);
-    return new Response(JSON.stringify({ error: 'Internal server error' }), { status: 500 });
+    return new Response(JSON.stringify({ error: 'Internal server error' }), { 
+      status: 500,
+      headers: { 'Access-Control-Allow-Origin': '*' }
+    });
   }
 });
