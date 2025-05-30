@@ -6,6 +6,7 @@ import { Button } from '@/components';
 import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
 import { useGetPersonBySupabaseIdLazyQuery } from '@/gql/queries/GetPersonBySupabaseId.generated';
 import { useCreateBookingMutation } from '@/gql/mutations/CreateBooking.generated';
+import { convertUuidToShort } from '@/utils';
 
 import type { BookingUserInfo } from './booking-machine';
 import { bookingMachine } from './booking-machine';
@@ -90,7 +91,15 @@ export function BookingFlow() {
       },
     });
 
-    setCreateBookingResult(data?.createBooking?.id ?? null);
+    const bookingResult = data?.createBooking?.id ?? null;
+
+    if (bookingResult) {
+      await sendConfirmation(result.patientId, bookingResult);
+    } else {
+      throw new Error('Missing booking');
+    }
+
+    setCreateBookingResult(bookingResult);
     send({ type: 'SUCCESS' });
   };
 
@@ -223,6 +232,30 @@ async function createPatientInSupabase(userInfo: BookingUserInfo) {
           state: userInfo.state,
           postal_code: userInfo.zip,
         },
+      }),
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to create patient');
+  }
+
+  return result;
+}
+
+async function sendConfirmation(patientId: string, bookingUuid: string) {
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/v1/send-confirmation`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: patientId,
+        bookingCode: convertUuidToShort(bookingUuid),
       }),
     }
   );
