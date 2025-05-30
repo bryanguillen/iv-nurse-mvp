@@ -26,14 +26,14 @@ export class SlotFinderService {
       {
         nurseId: input.nurseId,
         serviceId: input.serviceId,
-        startTime: new Date('2024-03-20T14:00:00Z'), // 9 AM EST
-        endTime: new Date('2024-03-20T15:00:00Z'), // 10 AM EST
+        startTime: new Date('2024-05-22T14:00:00Z'), // 9 AM EST
+        endTime: new Date('2024-05-22T15:00:00Z'), // 10 AM EST
       },
       {
         nurseId: input.nurseId,
         serviceId: input.serviceId,
-        startTime: new Date('2024-03-20T15:00:00Z'), // 10 AM EST
-        endTime: new Date('2024-03-20T16:00:00Z'), // 11 AM EST
+        startTime: new Date('2024-05-22T15:00:00Z'), // 10 AM EST
+        endTime: new Date('2024-05-22T16:00:00Z'), // 11 AM EST
       },
     ];
   }
