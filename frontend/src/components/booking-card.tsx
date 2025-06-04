@@ -2,8 +2,8 @@ import { formatInTimeZone } from 'date-fns-tz';
 import { Beaker } from 'lucide-react';
 
 import { convertUuidToShort } from '@/utils';
-import { Button } from './ui/button';
 import { ContentContainer } from './ui/content-container';
+import { BookingCardViewDetails } from './booking-card-view-details';
 
 export function BookingCard({ booking, timezone }: { booking: any; timezone: string }) {
   return (
@@ -13,7 +13,7 @@ export function BookingCard({ booking, timezone }: { booking: any; timezone: str
         <span className="font-medium">
           {formatInTimeZone(booking.startTime, timezone, 'h:mm a')}
         </span>
-        <span className="text-sm text-muted">Client #{convertUuidToShort(booking.personId)}</span>
+        <span className="text-sm text-muted">Client #{convertUuidToShort(booking.person.supabaseId)}</span>
       </div>
 
       {/* Second row: Service and View Details */}
@@ -22,7 +22,7 @@ export function BookingCard({ booking, timezone }: { booking: any; timezone: str
           <Beaker className="size-4 text-primary" />
           <span className="text-sm text-muted">{booking.service.name}</span>
         </div>
-        <Button size="sm">View Details</Button>
+        <BookingCardViewDetails patientId={booking.person.supabaseId} />
       </div>
     </ContentContainer>
   );
