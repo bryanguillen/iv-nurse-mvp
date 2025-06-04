@@ -35,7 +35,7 @@ export type BookingDto = {
   id: Scalars['String']['output'];
   notes?: Maybe<Scalars['String']['output']>;
   nurseId: Scalars['String']['output'];
-  personId: Scalars['String']['output'];
+  person: PersonUuidDto;
   service: NurseServiceDto;
   startTime: Scalars['DateTime']['output'];
   status: Scalars['String']['output'];
@@ -331,18 +331,21 @@ export type GetDashboardDataQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetDashboardDataQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, personId: string, startTime: any, service: { __typename?: 'NurseServiceDto', id: string, name: string } }>, getNurseStats: Array<{ __typename?: 'NurseStatsDto', id: string, totalRevenue: number, rebookingsCount: number, rebookingsRevenue: number, newCustomersCount: number, newCustomersRevenue: number }> };
+export type GetDashboardDataQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, startTime: any, service: { __typename?: 'NurseServiceDto', id: string, name: string }, person: { __typename?: 'PersonUuidDto', id: string, supabaseId: string } }>, getNurseStats: Array<{ __typename?: 'NurseStatsDto', id: string, totalRevenue: number, rebookingsCount: number, rebookingsRevenue: number, newCustomersCount: number, newCustomersRevenue: number }> };
 
 
 export const GetDashboardDataDocument = gql`
     query GetDashboardData($bookingsInput: GetAppointmentsInput!, $nurseIdForStats: String!) {
   getBookings(input: $bookingsInput) {
     id
-    personId
     startTime
     service {
       id
       name
+    }
+    person {
+      id
+      supabaseId
     }
   }
   getNurseStats(nurseId: $nurseIdForStats) {

@@ -35,7 +35,7 @@ export type BookingDto = {
   id: Scalars['String']['output'];
   notes?: Maybe<Scalars['String']['output']>;
   nurseId: Scalars['String']['output'];
-  personId: Scalars['String']['output'];
+  person: PersonUuidDto;
   service: NurseServiceDto;
   startTime: Scalars['DateTime']['output'];
   status: Scalars['String']['output'];
@@ -330,18 +330,21 @@ export type GetBookingsQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetBookingsQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, personId: string, startTime: any, service: { __typename?: 'NurseServiceDto', id: string, name: string } }> };
+export type GetBookingsQuery = { __typename?: 'Query', getBookings: Array<{ __typename?: 'BookingDto', id: string, startTime: any, service: { __typename?: 'NurseServiceDto', id: string, name: string }, person: { __typename?: 'PersonUuidDto', id: string, supabaseId: string } }> };
 
 
 export const GetBookingsDocument = gql`
     query GetBookings($input: GetAppointmentsInput!) {
   getBookings(input: $input) {
     id
-    personId
     startTime
     service {
       id
       name
+    }
+    person {
+      id
+      supabaseId
     }
   }
 }
