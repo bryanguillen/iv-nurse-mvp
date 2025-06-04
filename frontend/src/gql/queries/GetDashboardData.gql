@@ -1,11 +1,14 @@
 query GetDashboardData($bookingsInput: GetAppointmentsInput!, $nurseIdForStats: String!) {
   getBookings(input: $bookingsInput) {
     id
-    personId
     startTime
     service {
       id
       name
+    }
+    person {
+      id
+      supabaseId
     }
   }
   getNurseStats(nurseId: $nurseIdForStats) {
