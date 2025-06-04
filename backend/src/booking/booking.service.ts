@@ -18,7 +18,11 @@ export class BookingService {
   ) {}
 
   async cancel(input: CancelBookingInput): Promise<BookingEntity> {
-    const booking = await this.repo.findOne({ where: { id: input.bookingId } });
+    const booking = await this.repo.findOne({
+      where: { id: input.bookingId },
+      relations: ['person'],
+    });
+
     if (!booking) throw new Error('Booking not found');
 
     booking.status = 'cancelled';
@@ -27,7 +31,16 @@ export class BookingService {
 
   async create(input: CreateBookingInput): Promise<BookingEntity> {
     const record = this.repo.create(input);
-    return this.repo.save(record);
+    const saved = await this.repo.save(record);
+
+    const found = await this.repo.findOne({
+      where: { id: saved.id },
+      relations: ['person'],
+    });
+
+    if (!found) return saved;
+
+    return found;
   }
 
   async getByNurseAndDateOrRange(
@@ -41,6 +54,7 @@ export class BookingService {
     const query = this.repo
       .createQueryBuilder('booking')
       .leftJoinAndSelect('booking.service', 'service')
+      .leftJoinAndSelect('booking.person', 'person')
       .where('booking.nurseId = :nurseId', { nurseId });
 
     if (!end) {
@@ -67,12 +81,24 @@ export class BookingService {
   async modify(input: UpdateBookingInput): Promise<BookingEntity> {
     const { bookingId, newStartTime, newEndTime } = input;
 
-    const booking = await this.repo.findOne({ where: { id: bookingId } });
+    const booking = await this.repo.findOne({
+      where: { id: bookingId },
+      relations: ['person'],
+    });
+
     if (!booking) throw new Error('Booking not found');
 
     booking.startTime = newStartTime;
     booking.endTime = newEndTime;
 
-    return this.repo.save(booking);
+    const saved = await this.repo.save(booking);
+    const found = await this.repo.findOne({
+      where: { id: saved.id },
+      relations: ['person'],
+    });
+
+    if (!found) return saved;
+
+    return found;
   }
 }

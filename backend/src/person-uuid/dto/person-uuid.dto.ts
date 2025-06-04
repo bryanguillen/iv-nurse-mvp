@@ -7,6 +7,7 @@ export class PersonUuidDto {
 
   @Field()
   supabaseId: string;
+
   @Field()
   createdAt: Date;
 }

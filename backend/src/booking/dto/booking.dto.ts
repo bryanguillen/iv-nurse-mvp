@@ -1,6 +1,7 @@
 import { ObjectType, Field } from '@nestjs/graphql';
 
 import { NurseServiceDto } from '../../nurse-service/dto/nurse-service.dto';
+import { PersonUuidDto } from '../../person-uuid/dto/person-uuid.dto';
 
 @ObjectType()
 export class BookingDto {
@@ -10,8 +11,8 @@ export class BookingDto {
   @Field()
   nurseId: string;
 
-  @Field()
-  personId: string;
+  @Field(() => PersonUuidDto)
+  person: PersonUuidDto;
 
   @Field(() => NurseServiceDto)
   service: NurseServiceDto;
