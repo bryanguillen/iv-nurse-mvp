@@ -1,0 +1,6 @@
+mutation SaveNurseUuid($nurseId: String!, $orgId: String!, $timezone: String!) {
+  createNurseUuid(input: { supabaseId: $nurseId, timezone: $timezone, organizationId: $orgId }) {
+    id
+    supabaseId
+  }
+} 

@@ -1,0 +1,5 @@
+mutation SaveOrganizationRecord($orgId: String!) {
+  createOrganizationRecord(input: { supabaseOrgId: $orgId }) {
+    id
+  }
+} 
