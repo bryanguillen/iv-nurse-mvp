@@ -31,9 +31,10 @@ export function ServiceSelector({ selectedServiceId, onServiceSelect }: ServiceS
                 {service.description && (
                   <span className="text-sm text-muted">{service.description}</span>
                 )}
-                {service.price && (
+                {service.price > 0 && (
                   <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
                 )}
+                {!service.price && <span className="text-sm font-medium text-green-500">Free</span>}
               </div>
             </SelectItem>
           ))}
