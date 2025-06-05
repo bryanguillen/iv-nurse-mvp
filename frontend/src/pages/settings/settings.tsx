@@ -7,12 +7,7 @@ export function Settings() {
     <PageContainer>
       <h1 className="text-3xl font-bold">Settings</h1>
       <Alert variant="info">
-        <AlertDescription>
-          If you need to change anything, please email us at{' '}
-          <a href="mailto:example@example.com" className="text-primary hover:underline">
-            example@example.com
-          </a>
-        </AlertDescription>
+        <AlertDescription>If you need to change anything, please email us!</AlertDescription>
       </Alert>
       <BasicInfo />
       <AvailabilityServicesInfo />
