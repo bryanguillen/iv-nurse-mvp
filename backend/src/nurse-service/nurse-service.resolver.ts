@@ -4,11 +4,13 @@ import { NurseServiceService } from './nurse-serivce.service';
 import { CreateNurseServicesInput } from './dto/create-nurse-services.input';
 import { NurseServiceDto } from './dto/nurse-service.dto';
 import { DeleteNurseServicesInput } from './dto/delete-nurse-services.input';
+import { Public } from '../auth/supabase-auth.guard';
 
 @Resolver(() => NurseServiceDto)
 export class NurseServiceResolver {
   constructor(private service: NurseServiceService) {}
 
+  @Public()
   @Mutation(() => [NurseServiceDto])
   async configureNurseServices(
     @Args('input') input: CreateNurseServicesInput,
@@ -17,6 +19,7 @@ export class NurseServiceResolver {
     return entities.map((entity) => plainToInstance(NurseServiceDto, entity));
   }
 
+  @Public()
   @Mutation(() => Boolean)
   async deleteNurseServicesByIds(
     @Args('input') input: DeleteNurseServicesInput,
