@@ -25,19 +25,23 @@ export function ServiceSelector({ selectedServiceId, onServiceSelect }: ServiceS
           <SelectValue placeholder="Select a service" />
         </SelectTrigger>
         <SelectContent>
-          {nurse.services.map(service => (
-            <SelectItem key={service.id} value={service.id} textValue={service.name}>
-              <div className="flex flex-col">
-                {service.description && (
-                  <span className="text-sm text-muted">{service.description}</span>
-                )}
-                {service.price > 0 && (
-                  <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
-                )}
-                {!service.price && <span className="text-sm font-medium text-green-500">Free</span>}
-              </div>
-            </SelectItem>
-          ))}
+          {nurse.services
+            .sort((a, b) => a.name.localeCompare(b.name))
+            .map(service => (
+              <SelectItem key={service.id} value={service.id} textValue={service.name}>
+                <div className="flex flex-col">
+                  {service.description && (
+                    <span className="text-sm text-muted">{service.description}</span>
+                  )}
+                  {service.price > 0 && (
+                    <span className="text-sm font-medium">${service.price.toFixed(2)}</span>
+                  )}
+                  {!service.price && (
+                    <span className="text-sm font-medium text-green-500">Free</span>
+                  )}
+                </div>
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
       <div className="flex items-center gap-2 text-sm text-muted">
