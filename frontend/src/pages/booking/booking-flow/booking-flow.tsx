@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMachine } from '@xstate/react';
 import { useParams, useSearchParams } from 'react-router-dom';
 
-import { Button } from '@/components';
+import { Button, PageContainer } from '@/components';
 import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
 import { useGetPersonBySupabaseIdLazyQuery } from '@/gql/queries/GetPersonBySupabaseId.generated';
 import { useCreateBookingMutation } from '@/gql/mutations/CreateBooking.generated';
@@ -136,9 +136,10 @@ export function BookingFlow() {
 
   return (
     <div className="flex flex-col min-h-screen p-4">
-      {/* Header */}
-      <h1 className="text-lg font-semibold text-center">{getTitle()}</h1>
-
+      <PageContainer>
+        {/* Header */}
+        <h1 className="text-lg font-semibold text-center">{getTitle()}</h1>
+      </PageContainer>
       {/* Content */}
       <div className="flex-1 py-4 space-y-4">
         {step === 'selectService' && (
