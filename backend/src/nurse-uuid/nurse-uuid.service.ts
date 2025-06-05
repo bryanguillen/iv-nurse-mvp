@@ -12,10 +12,12 @@ export class NurseUuidService {
 
   async createNurseUuid(
     nurseId: string,
+    organizationId: string,
     timezone: string,
   ): Promise<NurseUuidEntity> {
     const nurseUuid = this.nurseUuidRepository.create({
       supabaseId: nurseId,
+      organizationId,
       timezone,
     });
     return this.nurseUuidRepository.save(nurseUuid);

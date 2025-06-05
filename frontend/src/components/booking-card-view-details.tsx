@@ -30,7 +30,7 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
 
   const fetchPatientData = async () => {
     if (!isOpen) return; // Don't fetch if dialog is closed
-    
+
     setLoading(true);
     setError(null);
 
@@ -94,11 +94,7 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
           </div>
         )}
 
-        {error && (
-          <div className="text-destructive text-center py-4">
-            {error}
-          </div>
-        )}
+        {error && <div className="text-destructive text-center py-4">{error}</div>}
 
         {patientData && !loading && !error && (
           <div className="space-y-4">
@@ -120,4 +116,4 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
       </DialogContent>
     </Dialog>
   );
-} 
+}

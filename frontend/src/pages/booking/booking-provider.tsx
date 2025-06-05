@@ -9,7 +9,6 @@ import { supabase } from '@/config/supabase';
 interface BookingDataContextType {
   organization: {
     id: string;
-    supabaseOrgId: string;
     name: string;
   };
   nurse: {
@@ -52,13 +51,13 @@ export function BookingProvider() {
 
   // Fetch organization from Supabase once we have the supabaseOrgId
   useEffect(() => {
-    if (!data?.getNurseById?.organization?.supabaseOrgId) return;
+    if (!data?.getNurseById?.organization?.id) return;
 
     const fetchSupabaseOrg = async () => {
       const { data: orgData, error: orgError } = await supabase
         .from('organizations')
         .select('id, name')
-        .eq('id', data.getNurseById?.organization?.supabaseOrgId)
+        .eq('id', data.getNurseById?.organization?.id)
         .single();
 
       if (orgError) {
@@ -70,7 +69,7 @@ export function BookingProvider() {
     };
 
     fetchSupabaseOrg();
-  }, [data?.getNurseById?.organization?.supabaseOrgId, setSupabaseOrg]);
+  }, [data?.getNurseById?.organization?.id, setSupabaseOrg]);
 
   const contextValue: BookingDataContextType | undefined | null = useMemo(
     () =>
@@ -78,7 +77,6 @@ export function BookingProvider() {
       supabaseOrg && {
         organization: {
           id: data.getNurseById.organization.id,
-          supabaseOrgId: data.getNurseById.organization.supabaseOrgId,
           name: supabaseOrg?.name,
         },
         nurse: {

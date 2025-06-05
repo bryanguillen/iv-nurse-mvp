@@ -1,17 +1,9 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, CreateDateColumn, PrimaryColumn } from 'typeorm';
 
 @Entity('organization_uuid')
 export class OrganizationUuidEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryColumn({ unique: true, name: 'id', type: 'uuid' })
   id: string;
-
-  @Column({ unique: true, name: 'supabase_org_id' })
-  supabaseOrgId: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

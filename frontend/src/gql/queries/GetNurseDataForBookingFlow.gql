@@ -12,7 +12,6 @@ query GetNurseDataForBookingFlow($nurseId: String!) {
     }
     organization {
       id
-      supabaseOrgId
     }
   }
 }

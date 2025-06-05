@@ -76,6 +76,7 @@ export type CreateNurseStatsInput = {
 };
 
 export type CreateNurseUuidInput = {
+  organizationId: Scalars['String']['input'];
   supabaseId: Scalars['String']['input'];
   timezone: Scalars['String']['input'];
 };
@@ -240,7 +241,6 @@ export type OrganizationUuid = {
   __typename?: 'OrganizationUuid';
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  supabaseOrgId: Scalars['String']['output'];
 };
 
 export type PersonUuidDto = {
@@ -332,18 +332,19 @@ export type SaveSupabaseIdsMutationVariables = Types.Exact<{
 }>;
 
 
-export type SaveSupabaseIdsMutation = { __typename?: 'Mutation', createNurseUuid: { __typename?: 'NurseUuid', id: string, supabaseId: string }, createOrganizationRecord: { __typename?: 'OrganizationUuid', id: string, supabaseOrgId: string } };
+export type SaveSupabaseIdsMutation = { __typename?: 'Mutation', createNurseUuid: { __typename?: 'NurseUuid', id: string, supabaseId: string }, createOrganizationRecord: { __typename?: 'OrganizationUuid', id: string } };
 
 
 export const SaveSupabaseIdsDocument = gql`
     mutation SaveSupabaseIds($nurseId: String!, $orgId: String!, $timezone: String!) {
-  createNurseUuid(input: {supabaseId: $nurseId, timezone: $timezone}) {
+  createNurseUuid(
+    input: {supabaseId: $nurseId, timezone: $timezone, organizationId: $orgId}
+  ) {
     id
     supabaseId
   }
   createOrganizationRecord(input: {supabaseOrgId: $orgId}) {
     id
-    supabaseOrgId
   }
 }
     `;

@@ -76,6 +76,7 @@ export type CreateNurseStatsInput = {
 };
 
 export type CreateNurseUuidInput = {
+  organizationId: Scalars['String']['input'];
   supabaseId: Scalars['String']['input'];
   timezone: Scalars['String']['input'];
 };
@@ -240,7 +241,6 @@ export type OrganizationUuid = {
   __typename?: 'OrganizationUuid';
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  supabaseOrgId: Scalars['String']['output'];
 };
 
 export type PersonUuidDto = {
@@ -330,7 +330,7 @@ export type GetNurseDataForBookingFlowQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetNurseDataForBookingFlowQuery = { __typename?: 'Query', getNurseById?: { __typename?: 'NurseUuid', id: string, timezone: string, services: Array<{ __typename?: 'NurseServiceDto', id: string, name: string, description?: string | null, price?: number | null, durationMinutes: number, topPick?: boolean | null }>, organization: { __typename?: 'OrganizationUuid', id: string, supabaseOrgId: string } } | null };
+export type GetNurseDataForBookingFlowQuery = { __typename?: 'Query', getNurseById?: { __typename?: 'NurseUuid', id: string, timezone: string, services: Array<{ __typename?: 'NurseServiceDto', id: string, name: string, description?: string | null, price?: number | null, durationMinutes: number, topPick?: boolean | null }>, organization: { __typename?: 'OrganizationUuid', id: string } } | null };
 
 
 export const GetNurseDataForBookingFlowDocument = gql`
@@ -348,7 +348,6 @@ export const GetNurseDataForBookingFlowDocument = gql`
     }
     organization {
       id
-      supabaseOrgId
     }
   }
 }

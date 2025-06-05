@@ -13,7 +13,9 @@ export function BookingCard({ booking, timezone }: { booking: any; timezone: str
         <span className="font-medium">
           {formatInTimeZone(booking.startTime, timezone, 'h:mm a')}
         </span>
-        <span className="text-sm text-muted">Client #{convertUuidToShort(booking.person.supabaseId)}</span>
+        <span className="text-sm text-muted">
+          Client #{convertUuidToShort(booking.person.supabaseId)}
+        </span>
       </div>
 
       {/* Second row: Service and View Details */}

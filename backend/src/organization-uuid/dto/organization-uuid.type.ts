@@ -6,8 +6,5 @@ export class OrganizationUuid {
   id: string;
 
   @Field()
-  supabaseOrgId: string;
-
-  @Field()
   createdAt: Date;
 }

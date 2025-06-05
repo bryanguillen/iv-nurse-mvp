@@ -18,6 +18,7 @@ export class NurseUuidResolver {
   ): Promise<NurseUuid> {
     const nurseUuid = await this.nurseUuidService.createNurseUuid(
       input.supabaseId,
+      input.organizationId,
       input.timezone,
     );
     return plainToInstance(NurseUuid, nurseUuid);

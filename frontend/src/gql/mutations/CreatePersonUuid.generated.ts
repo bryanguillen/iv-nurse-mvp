@@ -76,6 +76,7 @@ export type CreateNurseStatsInput = {
 };
 
 export type CreateNurseUuidInput = {
+  organizationId: Scalars['String']['input'];
   supabaseId: Scalars['String']['input'];
   timezone: Scalars['String']['input'];
 };
@@ -240,7 +241,6 @@ export type OrganizationUuid = {
   __typename?: 'OrganizationUuid';
   createdAt: Scalars['DateTime']['output'];
   id: Scalars['ID']['output'];
-  supabaseOrgId: Scalars['String']['output'];
 };
 
 export type PersonUuidDto = {

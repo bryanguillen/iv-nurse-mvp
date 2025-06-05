@@ -1,10 +1,9 @@
 mutation SaveSupabaseIds($nurseId: String!, $orgId: String!, $timezone: String!) {
-  createNurseUuid(input: { supabaseId: $nurseId, timezone: $timezone }) {
+  createNurseUuid(input: { supabaseId: $nurseId, timezone: $timezone, organizationId: $orgId }) {
     id
     supabaseId
   }
   createOrganizationRecord(input: { supabaseOrgId: $orgId }) {
     id
-    supabaseOrgId
   }
 }

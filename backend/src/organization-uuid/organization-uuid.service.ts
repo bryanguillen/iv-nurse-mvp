@@ -14,7 +14,7 @@ export class OrganizationUuidService {
   async create(
     input: CreateOrganizationUuidInput,
   ): Promise<OrganizationUuidEntity> {
-    const record = this.repo.create({ supabaseOrgId: input.supabaseOrgId });
+    const record = this.repo.create({ id: input.supabaseOrgId });
     return this.repo.save(record);
   }
 

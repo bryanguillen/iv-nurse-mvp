@@ -2,18 +2,19 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Input, Label, Card, CardContent, CardHeader, CardTitle } from '@/components';
-
-import { useAuth } from '../context/AuthContext';
-import { supabase } from '../config/supabase';
-import { useSaveSupabaseIdsMutation } from '../gql/mutations/SaveNurseOrgIds.generated';
+import { supabase } from '@/config/supabase';
+import { useAuth } from '@/context/AuthContext';
+import { useSaveOrganizationRecordMutation } from '@/gql/mutations/SaveOrganizationRecord.generated';
+import { useSaveNurseUuidMutation } from '@/gql/mutations/SaveNurseUuid.generated';
 
 export default function Setup() {
   const { user } = useAuth();
-  const [form, setForm] = useState({ first_name: '', last_name: '', org_name: '', timezone: '' });
+  const [form, setForm] = useState({ first_name: '', last_name: '', org_name: '' });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [saveSupabaseIds] = useSaveSupabaseIdsMutation();
+  const [saveOrganizationRecord] = useSaveOrganizationRecordMutation();
+  const [saveNurseUuid] = useSaveNurseUuidMutation();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -22,7 +23,7 @@ export default function Setup() {
   const handleSubmit = async () => {
     setError('');
     setIsLoading(true);
-    let orgId: string | undefined;
+    let orgId = '';
 
     if (!form.first_name || !form.last_name || !form.org_name) {
       setError('All fields required');
@@ -32,7 +33,7 @@ export default function Setup() {
 
     try {
       // Atomic-like flow
-      const result = await supabase.rpc('create_nurse_and_org', {
+      const result = await createNurseAndOrg({
         nurse_id: user.id,
         first_name: form.first_name,
         last_name: form.last_name,
@@ -43,18 +44,34 @@ export default function Setup() {
         throw new Error(result.error.message);
       }
 
-      orgId = result.data?.org_id;
+      orgId = result.org_id ?? '';
 
-      const { errors } = await saveSupabaseIds({
+      if (!orgId) {
+        throw new Error('Organization ID is required');
+      }
+
+      // First save the organization record
+      const { errors: orgErrors } = await saveOrganizationRecord({
+        variables: {
+          orgId,
+        },
+      });
+
+      if (orgErrors) {
+        throw new Error(orgErrors[0].message);
+      }
+
+      // Then save the nurse UUID
+      const { errors: nurseErrors } = await saveNurseUuid({
         variables: {
           nurseId: user.id,
-          orgId: orgId ?? '',
+          orgId,
           timezone: 'America/New_York',
         },
       });
 
-      if (errors) {
-        throw new Error(errors[0].message);
+      if (nurseErrors) {
+        throw new Error(nurseErrors[0].message);
       }
 
       navigate('/');
@@ -108,4 +125,40 @@ export default function Setup() {
       </Card>
     </div>
   );
+}
+
+async function createNurseAndOrg({
+  nurse_id,
+  first_name,
+  last_name,
+  org_name,
+}: {
+  nurse_id: string;
+  first_name: string;
+  last_name: string;
+  org_name: string;
+}) {
+  const response = await fetch(
+    `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/v1/create-nurse-org`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        nurse_id,
+        first_name,
+        last_name,
+        org_name,
+      }),
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    throw new Error(result.error || 'Failed to create nurse and org');
+  }
+
+  return result;
 }

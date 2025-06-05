@@ -6,5 +6,8 @@ export class CreateNurseUuidInput {
   supabaseId: string;
 
   @Field()
+  organizationId: string;
+
+  @Field()
   timezone: string;
 }
