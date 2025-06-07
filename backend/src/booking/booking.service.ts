@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { fromZonedTime } from 'date-fns-tz';
@@ -100,5 +100,18 @@ export class BookingService {
     if (!found) return saved;
 
     return found;
+  }
+
+  async getById(id: string): Promise<BookingEntity> {
+    const booking = await this.repo.findOne({
+      where: { id },
+      relations: ['nurse', 'service'],
+    });
+
+    if (!booking) {
+      throw new NotFoundException(`Booking with ID ${id} not found`);
+    }
+
+    return booking;
   }
 }

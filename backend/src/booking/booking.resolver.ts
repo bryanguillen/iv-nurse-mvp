@@ -61,4 +61,11 @@ export class BookingResolver {
     const result = await this.service.modify(input);
     return plainToInstance(BookingDto, result);
   }
+
+  @Public()
+  @Query(() => BookingDto)
+  async getBookingById(@Args('id') id: string): Promise<BookingDto> {
+    const result = await this.service.getById(id);
+    return plainToInstance(BookingDto, result);
+  }
 }
