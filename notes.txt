@@ -1,0 +1,71 @@
+Problem - We need to start prepping for launch. I am afraid we've moved so fast without testing things.
+
+
+Thoughts - The next step should be to get confidence in the FUNCTIONALITY of the app. If this MVP does not work
+then the rest is History. We should stop pouring features on this and make sure things work. In addition to that,
+we should make sure things look professional. So there will be functionality fixes AND UI polish happening.
+
+
+Thoughts - To the above, let's test both sides of the experience.
+
+
+User Types:
+
+- Nurse
+- Patients
+
+
+Nurse - Use Cases - Signup
+
+- Initial login/signup [x]
+- Subsequent signup/login [x]
+
+
+Nurse - Use Cases - Views (exclude signup)
+
+- Home
+- Bookings
+- Settings
+
+Nurse - Use Cases - Settings
+
+- None setup
+- Availability setup
+- Both availability and services setup
+
+
+Nurse Use Cases - Bookings
+
+- No appointments
+- Appointments
+
+
+Patient - Use Cases - Booking for the first time
+
+- First patient to book
+- Not the first patient to book, but for the first time
+- Not the first patient to book, but for a follow-up time
+
+
+Outstanding
+
+- Get the texting side ready to go
+
+
+Onboarding Plan (being updated as I test)
+
+- Create account via login page (magic link)
+- Go to email and open up magic link
+- Finish setup (first, last name and org)
+- Settings (for me internally, really)
+    - Collect the following from nurses
+        - Availability
+        - Services
+    - Update the data via mutations
+        - Availability - configureAvailability
+        - Services - configureNurseServices
+- Set the top services
+    - Collect the following from nurses:
+        - Top services -- 2 - 
+    - Update the data via mutations
+        - This is done with the first mutation actually; otherwise db write
