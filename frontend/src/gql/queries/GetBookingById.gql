@@ -1,0 +1,15 @@
+query GetBookingById($id: String!) {
+  getBookingById(id: $id) {
+    id
+    startTime
+    endTime
+    nurse {
+      id
+      timezone
+    }
+    service {
+        id
+        name
+    }
+  }
+} 
