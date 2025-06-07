@@ -6,7 +6,7 @@ import { Button, PageContainer } from '@/components';
 import { useCreatePersonUuidMutation } from '@/gql/mutations/CreatePersonUuid.generated';
 import { useGetPersonBySupabaseIdLazyQuery } from '@/gql/queries/GetPersonBySupabaseId.generated';
 import { useCreateBookingMutation } from '@/gql/mutations/CreateBooking.generated';
-import { convertUuidToShort } from '@/utils';
+import shortUuid from '@/config/short-uuid';
 
 import type { BookingUserInfo } from './booking-machine';
 import { bookingMachine } from './booking-machine';
@@ -256,7 +256,7 @@ async function sendConfirmation(patientId: string, bookingUuid: string) {
       },
       body: JSON.stringify({
         id: patientId,
-        bookingCode: convertUuidToShort(bookingUuid),
+        bookingCode: shortUuid.fromUUID(bookingUuid),
       }),
     }
   );

@@ -1,9 +1,8 @@
 import { CalendarIcon, CheckCircle2 } from 'lucide-react';
-
 import { formatInTimeZone } from 'date-fns-tz';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { convertUuidToShort } from '@/utils';
+
+import { Checkbox, Label } from '@/components';
+import shortUuid from '@/config/short-uuid';
 
 import { useBooking } from '../booking-provider';
 import type { BookingUserInfo } from './booking-machine';
@@ -31,7 +30,7 @@ export function Review({
   const serviceName = nurse?.services.find(service => service.id === serviceId)?.name ?? '';
 
   const details = [
-    ...(bookingId ? [{ label: 'Confirmation Code', value: convertUuidToShort(bookingId) }] : []),
+    ...(bookingId ? [{ label: 'Confirmation Code', value: shortUuid.fromUUID(bookingId) }] : []),
     { label: 'Service', value: serviceName },
     {
       label: 'Date',
