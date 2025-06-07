@@ -39,7 +39,7 @@ export function BookingConfirmation() {
   ];
 
   return (
-    <PageContainer className="space-y-4">
+    <PageContainer>
       <div className="flex items-center gap-2 text-green-600">
         <CheckCircle2 className="size-5 flex-shrink-0" />
         <p>
