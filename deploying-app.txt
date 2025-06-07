@@ -1,0 +1,57 @@
+Deploying the App
+
+We use different systems for this:
+
+- Supabase - Edge functions and storage for user data
+- Neon - DB for the NestJS app
+- Render - The NestJS app
+- Vercel - The FE app
+
+
+Supabase - High Level Overview
+- As mentioned above, we host edge functions, authentication and
+  storage for this.
+- There are two "projects"/environments for this -- dev and prod
+  - dev is used for local development
+
+Supabase - Deploying
+- When deploying, we need to make sure:
+  - The edge functions are deployed on prod
+  - The DB is migrated
+    - dev - supabase db pull
+    - prod - supabase db push
+    - notes - ensure you link before each command
+  - Environment variables (Ensure they mirror dev)
+
+
+Neon - High Level Overview
+- We use this as the app db for production
+
+Neon - Deploying
+- Locally, we generate the migration; commit
+- Locally, we run the migration (MAKE SURE YOU DO NOT HAVE THE DEV SERVER ON)
+  - For env vars - look it up on neon
+
+
+Render - High Level
+- Used for deploying the web service -- NestJS
+
+Render - Deploying
+- Just push -- just know, as of this writing, we use the free tier (dynos sleep and migration are manual)
+
+
+Vercel - High Level
+- Used for the react app
+
+Vercel - Deploying
+- Just push
+
+Getting env vars for prod
+
+- Twilio
+  - Account SID
+  - API key
+  - From number
+- Supabase
+    - The public key -- get it from settings -> api keys
+    - The anon -- same as above
