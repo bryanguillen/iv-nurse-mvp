@@ -8,15 +8,19 @@ import Setup from './pages/Setup';
 import { Bookings } from './pages/Bookings';
 import { Settings } from './pages/settings';
 import { BookingLanding, BookingFlow, BookingProvider } from './pages/booking';
+import { BookingConfirmation } from './pages/booking/confirmation';
 
 export default function App() {
   return (
     <>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/booking/:nurseId" element={<BookingProvider />}>
-          <Route index element={<BookingLanding />} />
-          <Route path="create" element={<BookingFlow />} />
+        <Route path="/booking">
+          <Route path=":nurseId" element={<BookingProvider />}>
+            <Route index element={<BookingLanding />} />
+            <Route path="create" element={<BookingFlow />} />
+          </Route>
+          <Route path="confirmation/:shortId" element={<BookingConfirmation />} />
         </Route>
         <Route element={<ProtectedLayout />}>
           <Route path="/" element={<Dashboard />} />
