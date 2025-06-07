@@ -1,7 +1,7 @@
 import { formatInTimeZone } from 'date-fns-tz';
 import { Beaker } from 'lucide-react';
 
-import { convertUuidToShort } from '@/utils';
+import shortUuid from '@/config/short-uuid';
 import { ContentContainer } from './ui/content-container';
 import { BookingCardViewDetails } from './booking-card-view-details';
 
@@ -14,7 +14,7 @@ export function BookingCard({ booking, timezone }: { booking: any; timezone: str
           {formatInTimeZone(booking.startTime, timezone, 'h:mm a')}
         </span>
         <span className="text-sm text-muted">
-          Client #{convertUuidToShort(booking.person.supabaseId)}
+          Client #{shortUuid.fromUUID(booking.person.supabaseId)}
         </span>
       </div>
 
