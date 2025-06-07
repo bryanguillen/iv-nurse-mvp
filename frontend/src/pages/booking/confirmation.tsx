@@ -4,7 +4,7 @@ import { formatInTimeZone } from 'date-fns-tz';
 
 import { useGetBookingByIdQuery } from '@/gql/queries/GetBookingById.generated';
 import shortUuid from '@/config/short-uuid';
-import { Spinner } from '@/components';
+import { Spinner, PageContainer } from '@/components';
 
 export function BookingConfirmation() {
   const { shortId } = useParams<{ shortId: string }>();
@@ -39,7 +39,7 @@ export function BookingConfirmation() {
   ];
 
   return (
-    <div className="space-y-4">
+    <PageContainer className="space-y-4">
       <div className="flex items-center gap-2 text-green-600">
         <CheckCircle2 className="size-5 flex-shrink-0" />
         <p>
@@ -59,7 +59,7 @@ export function BookingConfirmation() {
           ))}
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

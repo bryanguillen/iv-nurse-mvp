@@ -139,78 +139,78 @@ export function BookingFlow() {
       <PageContainer>
         {/* Header */}
         <h1 className="text-lg font-semibold text-center">{getTitle()}</h1>
-      </PageContainer>
-      {/* Content */}
-      <div className="flex-1 py-4 space-y-4">
-        {step === 'selectService' && (
-          <ServiceSelector
-            selectedServiceId={context.serviceId}
-            onServiceSelect={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
-          />
-        )}
-
-        {step === 'selectSlot' && (
-          <DateSelector
-            selectedDate={context.selectedDate}
-            onDateSelect={date =>
-              send({
-                type: 'SELECT_SLOT',
-                date: date ?? '',
-              })
-            }
-            serviceId={context.serviceId ?? ''}
-          />
-        )}
-
-        {step === 'userInfo' && (
-          <UserInfoForm userInfo={userInfo} onChange={handleUserInfoChange} />
-        )}
-
-        {(step === 'review' || step === 'success') && (
-          <Review
-            serviceId={context.serviceId ?? ''}
-            selectedDate={context.selectedDate ?? ''}
-            userInfo={userInfo}
-            confirmed={context.confirmed ?? false}
-            onConfirm={handleConfirm}
-            bookingId={createBookingResult}
-          />
-        )}
-      </div>
-
-      {/* Footer */}
-      {step !== 'success' && (
-        <div className="py-2 flex gap-2">
-          {step !== 'selectService' && (
-            <Button
-              onClick={() => send({ type: 'BACK' })}
-              className="flex-1 py-3"
-              variant="outline"
-              disabled={submissionInProgress}
-            >
-              Back
-            </Button>
+        {/* Content */}
+        <div className="flex-1 py-4 space-y-4">
+          {step === 'selectService' && (
+            <ServiceSelector
+              selectedServiceId={context.serviceId}
+              onServiceSelect={value => send({ type: 'SELECT_SERVICE', serviceId: value })}
+            />
           )}
-          {step !== 'review' && (
-            <Button
-              onClick={() => send({ type: 'NEXT' })}
-              className="flex-1 py-3"
-              disabled={!state.can({ type: 'NEXT' })}
-            >
-              Next
-            </Button>
+
+          {step === 'selectSlot' && (
+            <DateSelector
+              selectedDate={context.selectedDate}
+              onDateSelect={date =>
+                send({
+                  type: 'SELECT_SLOT',
+                  date: date ?? '',
+                })
+              }
+              serviceId={context.serviceId ?? ''}
+            />
           )}
-          {step === 'review' && (
-            <Button
-              onClick={() => handleSubmit()}
-              className="flex-1 py-3"
-              disabled={!context.confirmed || submissionInProgress}
-            >
-              Submit
-            </Button>
+
+          {step === 'userInfo' && (
+            <UserInfoForm userInfo={userInfo} onChange={handleUserInfoChange} />
+          )}
+
+          {(step === 'review' || step === 'success') && (
+            <Review
+              serviceId={context.serviceId ?? ''}
+              selectedDate={context.selectedDate ?? ''}
+              userInfo={userInfo}
+              confirmed={context.confirmed ?? false}
+              onConfirm={handleConfirm}
+              bookingId={createBookingResult}
+            />
           )}
         </div>
-      )}
+
+        {/* Footer */}
+        {step !== 'success' && (
+          <div className="py-2 flex gap-2">
+            {step !== 'selectService' && (
+              <Button
+                onClick={() => send({ type: 'BACK' })}
+                className="flex-1 py-3"
+                variant="outline"
+                disabled={submissionInProgress}
+              >
+                Back
+              </Button>
+            )}
+            {step !== 'review' && (
+              <Button
+                onClick={() => send({ type: 'NEXT' })}
+                className="flex-1 py-3"
+                disabled={!state.can({ type: 'NEXT' })}
+              >
+                Next
+              </Button>
+            )}
+            {step === 'review' && (
+              <Button
+                onClick={() => handleSubmit()}
+                className="flex-1 py-3"
+                disabled={!context.confirmed || submissionInProgress}
+              >
+                Submit
+              </Button>
+            )}
+          </div>
+        )}
+      </PageContainer>
     </div>
   );
 }
