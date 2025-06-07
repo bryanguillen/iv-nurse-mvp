@@ -15,6 +15,9 @@ const options: DataSourceOptions = {
   migrations: [join(process.cwd(), 'src', 'migrations', '*.{ts,js}')],
   synchronize: false,
   logging: true,
+  ssl: {
+    rejectUnauthorized: false // Required for Neon.tech
+  }
 };
 
 export default new DataSource(options); 
