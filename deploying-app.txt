@@ -16,7 +16,7 @@ Supabase - High Level Overview
 
 Supabase - Deploying
 - When deploying, we need to make sure:
-  - The edge functions are deployed on prod
+  - The edge functions are deployed on prod (ensure callable)
   - The DB is migrated
     - dev - supabase db pull
     - prod - supabase db push
