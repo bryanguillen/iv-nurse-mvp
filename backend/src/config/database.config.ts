@@ -16,5 +16,11 @@ export default registerAs(
       synchronize: process.env.NODE_ENV !== 'production',
       logging: process.env.NODE_ENV !== 'production',
       autoLoadEntities: true,
+      ssl:
+        process.env.NODE_ENV === 'production'
+          ? {
+              rejectUnauthorized: false,
+            }
+          : false,
     }) as DataSourceOptions,
 );
