@@ -34,6 +34,7 @@ export type BookingDto = {
   endTime: Scalars['DateTime']['output'];
   id: Scalars['String']['output'];
   notes?: Maybe<Scalars['String']['output']>;
+  nurse: NurseUuid;
   nurseId: Scalars['String']['output'];
   person: PersonUuidDto;
   service: NurseServiceDto;
@@ -254,6 +255,7 @@ export type Query = {
   __typename?: 'Query';
   getAvailabilityByNurseId: Array<NurseAvailabilityDto>;
   getAvailableSlots: Array<AvailableSlotsDto>;
+  getBookingById: BookingDto;
   getBookings: Array<BookingDto>;
   getNurseById?: Maybe<NurseUuid>;
   getNurseServicesByNurseId: Array<NurseServiceDto>;
@@ -271,6 +273,11 @@ export type QueryGetAvailabilityByNurseIdArgs = {
 
 export type QueryGetAvailableSlotsArgs = {
   input: SlotFinderInput;
+};
+
+
+export type QueryGetBookingByIdArgs = {
+  id: Scalars['String']['input'];
 };
 
 
