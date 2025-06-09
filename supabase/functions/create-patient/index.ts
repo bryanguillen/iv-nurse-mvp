@@ -18,9 +18,9 @@ serve(async (req) => {
   );
 
   try {
-    const { firstName, lastName, phone, address } = await req.json();
+    const { firstName, lastName, phone, address, nurseId } = await req.json();
 
-    if (!firstName || !lastName || !phone || !address) {
+    if (!firstName || !lastName || !phone || !address || !nurseId) {
       return new Response(JSON.stringify({ error: 'Missing fields' }), {
         status: 400,
         headers: { 'Access-Control-Allow-Origin': '*' },
@@ -196,6 +196,42 @@ serve(async (req) => {
         addressId = existingAddress.id;
         console.log('Address unchanged; no update needed.');
       }
+    }
+
+    // Create nurse-patient relationship if it doesn't exist
+    const { data: existingRelationship, error: relationshipError } = await supabaseClient
+      .from('nurse_patient')
+      .select('id')
+      .eq('nurse_id', nurseId)
+      .eq('patient_id', userId)
+      .single();
+
+    if (relationshipError && relationshipError.code !== 'PGRST116') {
+      console.error('Error checking nurse-patient relationship:', relationshipError);
+      return new Response(JSON.stringify({ error: 'Nurse-patient relationship check failed' }), {
+        status: 500,
+        headers: { 'Access-Control-Allow-Origin': '*' },
+      });
+    }
+
+    if (!existingRelationship) {
+      const { error: insertRelationshipError } = await supabaseClient
+        .from('nurse_patient')
+        .insert([{
+          nurse_id: nurseId,
+          patient_id: userId
+        }]);
+
+      if (insertRelationshipError) {
+        console.error('Error creating nurse-patient relationship:', insertRelationshipError);
+        return new Response(JSON.stringify({ error: 'Nurse-patient relationship creation failed' }), {
+          status: 500,
+          headers: { 'Access-Control-Allow-Origin': '*' },
+        });
+      }
+      console.log(`Created nurse-patient relationship for nurse ${nurseId} and patient ${userId}`);
+    } else {
+      console.log('Nurse-patient relationship already exists');
     }
 
     return new Response(
