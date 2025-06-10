@@ -14,6 +14,7 @@ import { ServiceSelector } from './service-selector';
 import { DateSelector } from './date-selector';
 import { UserInfoForm } from './user-info-form';
 import { Review } from './review';
+import { useBooking } from '../booking-provider';
 
 export function BookingFlow() {
   const [state, send] = useMachine(bookingMachine);
@@ -30,6 +31,7 @@ export function BookingFlow() {
     state: '',
     zip: '',
   };
+  const { nurse: { supabaseId: nurseSupabaseId } } = useBooking()
 
   const [createBookingResult, setCreateBookingResult] = useState<string | null>(null);
   const [creatingPersonInSupabase, setCreatingPersonInSupabase] = useState<boolean>(false);
@@ -50,7 +52,7 @@ export function BookingFlow() {
   const handleSubmit = async () => {
     setCreatingPersonInSupabase(true);
 
-    const result = await createPatientInSupabase(userInfo);
+    const result = await createPatientInSupabase(userInfo, nurseSupabaseId);
     let personUuid = '';
 
     setCreatingPersonInSupabase(false);
@@ -215,7 +217,7 @@ export function BookingFlow() {
   );
 }
 
-async function createPatientInSupabase(userInfo: BookingUserInfo) {
+async function createPatientInSupabase(userInfo: BookingUserInfo, nurseId: string) {
   const response = await fetch(
     `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/v1/create-patient`,
     {
@@ -227,6 +229,7 @@ async function createPatientInSupabase(userInfo: BookingUserInfo) {
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         phone: userInfo.phone,
+        nurseId,
         address: {
           line1: userInfo.streetAddress,
           city: userInfo.city,
