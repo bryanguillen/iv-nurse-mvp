@@ -35,34 +35,36 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
     setError(null);
 
     try {
-      // First get the patient data
-      const { data: patient, error: patientError } = await supabase
-        .from('patients')
-        .select('first_name, last_name, phone, address_id')
-        .eq('id', patientId)
-        .single();
+      // Get the auth token
+      const { data: { session } } = await supabase.auth.getSession();
+      const token = session?.access_token;
 
-      if (patientError) throw patientError;
+      if (!token) {
+        throw new Error('No authentication token available');
+      }
 
-      // Then get the address data
-      const { data: address, error: addressError } = await supabase
-        .from('addresses')
-        .select('line1, city, state, postal_code')
-        .eq('id', patient.address_id)
-        .single();
+      // Fetch patient data from edge function
+      const response = await fetch(
+        `${import.meta.env.VITE_SUPABASE_EDGE_FUNCTIONS_URL}/v1/get-patient-data?patientId=${patientId}`,
+        {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        }
+      );
 
-      if (addressError) throw addressError;
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to fetch patient data');
+      }
 
       setPatientData({
-        firstName: patient.first_name,
-        lastName: patient.last_name,
-        phone: patient.phone,
-        address: {
-          line1: address.line1,
-          city: address.city,
-          state: address.state,
-          postalCode: address.postal_code,
-        },
+        firstName: result.firstName,
+        lastName: result.lastName,
+        phone: result.phone,
+        address: result.address,
       });
     } catch (err) {
       setError('Failed to load patient information');
