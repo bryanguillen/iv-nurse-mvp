@@ -337,7 +337,7 @@ export type GetNurseDataForBookingFlowQueryVariables = Types.Exact<{
 }>;
 
 
-export type GetNurseDataForBookingFlowQuery = { __typename?: 'Query', getNurseById?: { __typename?: 'NurseUuid', id: string, timezone: string, services: Array<{ __typename?: 'NurseServiceDto', id: string, name: string, description?: string | null, price?: number | null, durationMinutes: number, topPick?: boolean | null }>, organization: { __typename?: 'OrganizationUuid', id: string } } | null };
+export type GetNurseDataForBookingFlowQuery = { __typename?: 'Query', getNurseById?: { __typename?: 'NurseUuid', id: string, timezone: string, supabaseId: string, services: Array<{ __typename?: 'NurseServiceDto', id: string, name: string, description?: string | null, price?: number | null, durationMinutes: number, topPick?: boolean | null }>, organization: { __typename?: 'OrganizationUuid', id: string } } | null };
 
 
 export const GetNurseDataForBookingFlowDocument = gql`
@@ -345,6 +345,7 @@ export const GetNurseDataForBookingFlowDocument = gql`
   getNurseById(id: $nurseId) {
     id
     timezone
+    supabaseId
     services {
       id
       name
