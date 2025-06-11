@@ -4,6 +4,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { ThrottlerModule } from '@nestjs/throttler';
 import { OrganizationUuidModule } from './organization-uuid/organization-uuid.module';
 import { NurseUuidModule } from './nurse-uuid/nurse-uuid.module';
 import { NurseAvailabilityModule } from './nurse-availability/nurse-availability.module';
@@ -34,6 +35,12 @@ import { NurseStatsModule } from './nurse-stats/nurse-stats.module';
       introspection: true,
       context: ({ req }) => ({ req }), // Attach request to context for auth
     }),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60,
+        limit: 50,
+      },
+    ]),
     NurseUuidModule,
     OrganizationUuidModule,
     NurseAvailabilityModule,
