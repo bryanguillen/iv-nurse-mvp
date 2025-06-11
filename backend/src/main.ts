@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import helmet from 'helmet';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -13,6 +14,8 @@ async function bootstrap() {
     origin: frontendUrl,
     credentials: true,
   });
+
+  app.use(helmet());
 
   await app.listen(port ?? 3000);
 }
