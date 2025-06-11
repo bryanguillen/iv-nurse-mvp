@@ -14,6 +14,7 @@ import { NurseServiceModule } from './nurse-service/nurse-service.module';
 import { PersonUuidModule } from './person-uuid/person-uuid.module';
 import { BookingModule } from './booking/booking.module';
 import { NurseStatsModule } from './nurse-stats/nurse-stats.module';
+import { logger } from './config/logger';
 
 @Module({
   imports: [
@@ -33,7 +34,13 @@ import { NurseStatsModule } from './nurse-stats/nurse-stats.module';
       driver: ApolloDriver,
       autoSchemaFile: true,
       introspection: true,
-      context: ({ req }) => ({ req }), // Attach request to context for auth
+      context: ({ req }) => {
+        const operation = req.body?.operationName || 'UnnamedOperation';
+
+        logger.log(`Incoming GraphQL: ${operation}`);
+
+        return { req }; // Attach request to context for auth
+      },
     }),
     ThrottlerModule.forRoot([
       {
