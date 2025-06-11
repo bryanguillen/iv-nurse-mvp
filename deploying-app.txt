@@ -55,3 +55,4 @@ Getting env vars for prod
 - Supabase
     - The public key -- get it from settings -> api keys
     - The anon -- same as above
+    - The secret -- under data api
