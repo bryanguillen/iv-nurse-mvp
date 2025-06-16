@@ -36,7 +36,9 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
 
     try {
       // Get the auth token
-      const { data: { session } } = await supabase.auth.getSession();
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
       const token = session?.access_token;
 
       if (!token) {
@@ -49,7 +51,7 @@ export function BookingCardViewDetails({ patientId }: BookingCardViewDetailsProp
         {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
           },
         }
       );

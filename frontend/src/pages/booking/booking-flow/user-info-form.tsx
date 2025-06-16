@@ -31,6 +31,16 @@ export function UserInfoForm({ userInfo, onChange }: UserInfoFormProps) {
       </div>
 
       <div className="space-y-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          value={userInfo.email}
+          onChange={e => onChange('email', e.target.value)}
+          placeholder="Enter your email"
+        />
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="phone">Phone Number</Label>
         <Input
           id="phone"

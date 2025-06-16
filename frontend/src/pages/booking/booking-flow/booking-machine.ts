@@ -4,6 +4,7 @@ export interface BookingUserInfo {
   firstName: string;
   lastName: string;
   phone: string;
+  email: string;
   notes?: string;
   streetAddress: string;
   city: string;
@@ -73,6 +74,7 @@ export const bookingMachine = createMachine({
             !!context.userInfo?.firstName &&
             !!context.userInfo?.lastName &&
             !!context.userInfo?.phone &&
+            !!context.userInfo?.email &&
             !!context.userInfo?.streetAddress &&
             !!context.userInfo?.city &&
             !!context.userInfo?.state &&

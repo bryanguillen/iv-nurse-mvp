@@ -26,12 +26,15 @@ export function BookingFlow() {
     firstName: '',
     lastName: '',
     phone: '',
+    email: '',
     streetAddress: '',
     city: '',
     state: '',
     zip: '',
   };
-  const { nurse: { supabaseId: nurseSupabaseId } } = useBooking()
+  const {
+    nurse: { supabaseId: nurseSupabaseId },
+  } = useBooking();
 
   const [createBookingResult, setCreateBookingResult] = useState<string | null>(null);
   const [creatingPersonInSupabase, setCreatingPersonInSupabase] = useState<boolean>(false);
@@ -73,6 +76,8 @@ export function BookingFlow() {
           supabaseId: result.patientId,
         },
       });
+
+      console.log('data', data);
 
       if (data?.getPersonBySupabaseId) {
         personUuid = data.getPersonBySupabaseId.id;
@@ -229,6 +234,7 @@ async function createPatientInSupabase(userInfo: BookingUserInfo, nurseId: strin
         firstName: userInfo.firstName,
         lastName: userInfo.lastName,
         phone: userInfo.phone,
+        email: userInfo.email,
         nurseId,
         address: {
           line1: userInfo.streetAddress,
