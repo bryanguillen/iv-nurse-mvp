@@ -18,9 +18,9 @@ serve(async (req) => {
   );
 
   try {
-    const { firstName, lastName, phone, address, nurseId } = await req.json();
+    const { firstName, lastName, phone, email, address, nurseId } = await req.json();
 
-    if (!firstName || !lastName || !phone || !address || !nurseId) {
+    if (!firstName || !lastName || !phone || !email || !address || !nurseId) {
       return new Response(JSON.stringify({ error: 'Missing fields' }), {
         status: 400,
         headers: { 'Access-Control-Allow-Origin': '*' },
@@ -45,12 +45,12 @@ serve(async (req) => {
       });
     }
 
-    const matchingUser = userList.users.find((user) => user.phone === phone);
+    const matchingUser = userList.users.find((user) => user.email === email);
     let userId = matchingUser?.id;
 
     if (!userId) {
       const { data: newUserData, error: userError } =
-        await supabaseClient.auth.admin.createUser({ phone });
+        await supabaseClient.auth.admin.createUser({ email, phone });
 
       if (userError || !newUserData?.user?.id) {
         console.error('Error creating user:', userError);
@@ -106,6 +106,7 @@ serve(async (req) => {
           first_name: firstName,
           last_name: lastName,
           phone,
+          email,
           address_id: addressId,
         },
       ]);
